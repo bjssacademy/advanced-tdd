@@ -80,7 +80,7 @@ If we write our own programming language interpreter - and this is more common t
 
 The + operator above is a component at a very low-level.
 
-## Working definition
+## Common features of software components
 
 We notice some common features in the previous examples:
 
@@ -89,6 +89,8 @@ We notice some common features in the previous examples:
 - There are ways to create that component and configure it
 - There is a programming interface so we can use the component
 - _Encapsulation_ is used. The component hides its inner working from the code which uses it
+
+## Working definition
 
 These features lead us to a working definition of a software component:
 
@@ -108,8 +110,16 @@ To implement a component, we must first specify what _behaviour_ it needs to hav
 
 When we use a component, the inside view is of no consequence at all. So far as we care, the component 'just works'. It is the outside view - what does it do? How do I use it? - that is primary.
 
-## Systems thinking
+### Systems thinking
 
-This is absolutely fundamental to building complex systems. As a system grows to become complex, the individual components and how they work internally matter less. So long as they do their job, they will work in the wider service. The complexity arises from the _interactions_ between simple components.
+This separation of usae/implementation is absolutely fundamental to building complex systems. As a system grows to become complex, the individual components and how they work internally matter less. So long as they do their job, they will work in the wider service. The complexity arises from the _interactions_ between simple components.
 
 Systems are fractal. A complex system is made from interacting subsystems. They themselves are made from interacting components. It's turtles all the way down until we hit cold, hard processor instructions.
+
+## TDD and software components
+
+TDD is a perfect pairing with software components. Components themselves are they key to computational thinking and building complex systems. Especially as complex behaviour emerges during the iterative nature of an agile project.
+
+TDD allows us to focus on specifying the outside of a component: the deired behaviour and programming interface. It says nothing about the inside of that component. We can implement it however we like.
+
+TDD goes that stage further than traditional written documentation by starting from _executable specifcations_ of our software components.
