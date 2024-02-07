@@ -120,6 +120,10 @@ Systems are fractal. A complex system is made from interacting subsystems. They 
 
 TDD is a perfect pairing with software components. Components themselves are they key to computational thinking and building complex systems. Especially as complex behaviour emerges during the iterative nature of an agile project.
 
-TDD allows us to focus on specifying the outside of a component: the deired behaviour and programming interface. It says nothing about the inside of that component. We can implement it however we like.
+TDD allows us to focus on specifying the outside of a component: the desired behaviour and programming interface. It says nothing about the inside of that component. We can implement it however we like.
 
-TDD goes that stage further than traditional written documentation by starting from _executable specifcations_ of our software components.
+TDD goes that stage further than traditional written documentation by starting from _executable specifications_ of our software components.
+
+## Next
+
+A brief recap, as a blantant ruse to add a cheat sheet
