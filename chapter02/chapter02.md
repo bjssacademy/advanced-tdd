@@ -126,4 +126,4 @@ TDD goes that stage further than traditional written documentation by starting f
 
 ## Next
 
-A brief recap, as a blantant ruse to add a cheat sheet
+A brief recap, as a blatant ruse to add a cheat sheet
