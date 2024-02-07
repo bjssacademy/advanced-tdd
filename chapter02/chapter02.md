@@ -27,12 +27,16 @@ Notice that, while simple:
 ### Method on an object instance
 
 ```go
+type BetterString struct {
+	value string
+}
+
 func (s *BetterString) join (textToJoin string) {
     s.value += "-" + textToJoin
 }
 ```
 
-Here, we have created a struct called `BetterString`, and added a method `join()`. It will join the second string onto the current value stored, using a dash as a connector. The same behaviour as our function (mostly - can you spot the difference?)
+Here, we have created a struct called `BetterString`, and added a method `join()`. It will join the second string onto the current value stored, using a dash as a connector. The same behaviour as our previous function (mostly - can you spot the difference?)
 
 This shows an alternative _programming interface_ for our behaviour. Deciding to create a function or a method on a struct as the way we package up a behaviour is part of software design.
 
@@ -112,7 +116,7 @@ When we use a component, the inside view is of no consequence at all. So far as 
 
 ### Systems thinking
 
-This separation of usae/implementation is absolutely fundamental to building complex systems. As a system grows to become complex, the individual components and how they work internally matter less. So long as they do their job, they will work in the wider service. The complexity arises from the _interactions_ between simple components.
+This separation of usage/implementation is absolutely fundamental to building complex systems. As a system grows to become complex, the individual components and how they work internally matter less. So long as they do their job, they will work in the wider service. The complexity arises from the _interactions_ between simple components.
 
 Systems are fractal. A complex system is made from interacting subsystems. They themselves are made from interacting components. It's turtles all the way down until we hit cold, hard processor instructions.
 
