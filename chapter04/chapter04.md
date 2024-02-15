@@ -472,6 +472,149 @@ At others times, we may find that the dipstick method becomes useful as a privat
 
 The trick is to _wait and see_. As part of a fture refactoring step, we retain the option to remove dipstick methods. But it is too early to make that decision now.
 
+## Make the test compile, then check it fails
+
+Now we've made our choice, let's run the test:
+
+'''bash
+
+# battleships [battleships.test]
+
+/Users/Alan.Mellor/academy/advanced-tdd/chapter04/code/main_test.go:16:14: grid.isShipPresent undefined (type \*Grid has no field or method isShipPresent)
+FAIL battleships [build failed]
+FAIL'
+
+````
+
+This clears us to add the new method on Grid:
+
+```golang
+func (g *Grid) isShipPresent(row int, col int) bool {
+	return false
+}
+````
+
+Everything compiles, and all three sctions of our test are complete.
+
+To get a basic confidence that our test is looking at the right things, let's run our test as it stands now. The console tells us this:
+
+```bash
+--- FAIL: TestPlacesShip (0.00s)
+    /Users/Alan.Mellor/academy/advanced-tdd/chapter04/code/main_test.go:20: Ship was not placed
+FAIL
+FAIL	battleships	0.280s
+FAIL
+```
+
+Excellent! We have a failing test. We will cover why this is important in more detail in the next chapter. But for now - onwards!
+
 Let's move on to implementing our PlaceShip() production code.
 
 ## Implementing PlaceShip()
+
+We've arrived at an executable specification of what we want our PlaceShip() method to do, and the way we want programmers to use it. We've encapsulated the implementation details.
+
+Now it is time to _design_ the implementation, to conform to the specification. Note: this is how things always used to be done!
+
+> TDD is _think first, code later_
+
+### Obviously we will use a 2D array, right?
+
+Wrong, of course!
+
+The beuty of TDD is it promotes the idea of _design by contract_. This has had various names over time. Bertrand Meyer coined the exact phrase when writing about his Eiffel language. But the idea dates back to at least Daid L. Parnas and his 1968 paper on Information Hiding.
+
+What the rest of the code sees is our interface. That interface maintains a contract to its consumers. In our case, that contract is "you call PlaceShip(2, 3) and I will place a ship at row 2, column 3".
+
+> A contract is a string promise to the callers of this code
+
+Behind this contract, we can fulfil the promise any way we like.
+
+What are some options?
+
+### Options to implement our data storage for ships
+
+We can, of course, represent a Grid using the most grid-like structure available in Go. A two-dimensional array. One dimensions represents rows. the other columns. It doesn't really matter which way round they go so long as we are consistent.
+
+This represents the play area as a fixed number of locations (array elements) which can represent our data.
+
+For our requirements, this data needs to support two business requirements:
+
+1. Shoot: no ship presnt -> player misses
+2. Shoot: ship present -> player hits and ship sinks
+
+The simplest way to do this is to use a two-value system. Each element stores one of two values to indicate presence or absence of a ship.
+
+So we could have
+
+- 2D Array of `string` with values `"SHIP"` and `""` (empty string)
+- 2D Array of `bool` with `true` indicating presence of ship, `false` being empty
+- 2D Array of named int constants - `SHIP`, `EMPTY`
+
+But that's not the only game in town. Some other reasonable options are:
+
+- A `uint64` treated as 64 separate bits as a bit field. 1 for ship, 0 for empty. This simplifies the game win detection by being a simple check for zero.
+- A linear array of 49 elements, instead of a 2D array
+- A slice of `type coordinates struct`. Each ship still unsunk has a coordinate pair like (2,3) placed into this slice
+
+You can see some of these options as branches in the accompanying example code.
+
+The main point here is that _any_ implementation can be chosen, because _all_ implementations fulfil the interface contract.
+
+### Exercise for the interested (or otherwise coerced) reader
+
+- Pick an option above
+- Write the code to make the test pass
+
+As one example, here is how the 2D array using "SHIP" strings would look:
+
+```golang
+package main
+
+const (
+	ROWS = 7
+	COLUMNS = 7
+
+	SHIP = "SHIP"
+)
+
+type Grid struct {
+	locations [ROWS][COLUMNS]string
+}
+
+func NewGrid() *Grid {
+	return &Grid{}
+}
+
+func (g *Grid) PlaceShip(row int, col int) {
+	g.locations[row][col] = SHIP
+}
+
+func (g *Grid) isShipPresent(row int, col int) bool {
+	return g.locations[row][col] == SHIP
+}
+```
+
+Which results in a glorious test pass:
+
+```bash
+ok  	battleships	0.190s
+```
+
+## Review
+
+This chapter has covvered
+
+- Test behaviour, not implementation
+- Arrange, Act, Assert
+- No production code was written without a failing test
+- Failure to compile counts as a test failure
+- Micro-increments of writing the test and production code skeleton
+- TDD promotes strong separation of concerns
+- TDD makes us think before we code
+- TDD promotes designing programming interface contracts
+- Good practices if we must use test-only (dipstick) methods
+
+## Next
+
+We have followed through two-thirds of one cycle of a TDD workflow. The next chapter looks at what happens next, before we move on to our next test.

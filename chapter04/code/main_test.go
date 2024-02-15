@@ -13,4 +13,10 @@ func TestPlacesShip(t *testing.T) {
 	grid.PlaceShip(row, column)
 
 	// Assert
+	got := grid.isShipPresent(row, column)
+	want := true
+
+	if got != want {
+		t.Error("Ship was not placed")
+	}
 }
