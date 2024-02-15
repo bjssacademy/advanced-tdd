@@ -24,7 +24,7 @@
 - Executable Specifications
 - Fast feeback on ease of use of programming interface
 - Documentation
-- Example code provided in tests
+- Example usage code provided in tests
 - Automates testing of code once written
 - Simple to prove correct behaviour for edge cases
 - Confidence durng refactoring
