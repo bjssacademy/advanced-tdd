@@ -617,6 +617,6 @@ This chapter has covered
 - TDD promotes designing programming interface contracts
 - Good practices if we must use test-only (dipstick) methods
 
-## Next
+## [Next >>](/chapter05/chapter05.md)
 
 We have followed through two-thirds of one cycle of a TDD workflow. The next chapter looks at what happens next, before we move on to our next test.

@@ -128,6 +128,6 @@ TDD actively helps us:
 
 _What's not to like?_
 
-## Next
+## [Next >>](/chapter02/chapter02.md)
 
 Let's take a look at what we mean by the vague term of 'a software component' in the next chapter. Mercifully, with a short code example.
