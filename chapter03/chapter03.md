@@ -30,3 +30,7 @@
 - Confidence durng refactoring
 - Regression testing - ensuring new code does not break old code
 - Speeds up debugging (faster to run code to debug)
+
+## [Next >>](/chapter04/chapter04.md)
+
+Let's write our first test
