@@ -149,7 +149,7 @@ Given a choice of OO code, we'll decide that:
 
 Huzzah - we can get coding already! We have some more important decisions to make, but let's make a start
 
-## Coding the Arrange section
+## What do we code first? Arrange, Act or Assert?
 
 One choice to make when writing a test is which of the three sections to start with.
 
@@ -158,6 +158,10 @@ Starting with the Assert can be very useful - working backwards from 'this is wh
 In this case, it feels like starting with Arrange - 'how do we get started' is useful.
 
 The Arrange step is where we set up our production code under test to be ready to Act. We configure and create software components. We _wire up_ components that need to work as a group. We get ready to make the component Act - actual do the behaviour we care about.
+
+Decide on a _case by case basis_ whether you should start with arrange, act or assert.
+
+## Coding the Arrange section
 
 To make our arrange for TestPlacesShip, we know that everything will start from creating an empty grid to place our ship on.
 
