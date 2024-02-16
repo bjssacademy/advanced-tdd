@@ -189,7 +189,7 @@ We still have a failing test at this point. The compiler points out that:
 
 ![Unused grid](images/aaa-unused-var.png)
 
-But that's progress twoards our goal in a micro-iteration
+But that's progress toward our goal in a micro-iteration
 
 > TDD is _really_ agile. It works on rapid feedback over many micro-iterations
 
@@ -218,7 +218,7 @@ We need to specify a location, and pass that location into the method call.
 
 That's not as obvious as it seems, as we need another design decision here. I mean who knew that writing code needing _so many_ design decisions?
 
-- Q: How should we represent the location of the ship?
+Q: How should we represent the location of the ship?
 
 Note that this has nothing - and I mean _nothing_ - to do with the implementation of how ships are stored. It is our choice. Dear Designer-in-Chief - what would you prefer?
 
@@ -234,7 +234,8 @@ The last two seem mad. But that's just me. Maybe you see utility in them. The po
 
 We decide. Not some framework. Not some implementation detail.
 
-> Easy-to-use code starts _here_. These decisions are critical. It's why TDD makes us do them first
+> Easy-to-use code starts _here_. These decisions are critical.
+> It's why TDD makes us do them first
 
 I decided to go basic and use that first one. A pair of integers from 0 to 6 inclusive. The first one I pass in will be the row. The second the column.
 
@@ -259,11 +260,13 @@ func TestPlacesShip(t *testing.T) {
 }
 ```
 
-We've added _explaining variables_ `row` and `col` to make it totally clear which parameter is which in the test. We don't always need these - but these are a valuable tool in the toolbelt to aid readability. Get rid of them if they don't aid with that.
+We've added _explaining variables_ `row` and `col` to make it totally clear which parameter is which in the test. If the intent of the test is clear without them, then don't use them. But here, they clarify the roles of the parameters.
 
-Remember, tests are executable specifications - and as such, live documentation. Having that skim readability is part of writing good tests.
+Remember, tests are executable specifications - and as such, they are also living documentation. Having that skim readability is part of writing good tests.
 
-Our compiler tells us that we have a missing method, so we can fix this in our production code:
+> Optimise for clarity
+
+Our compiler tells us that we have a missing method. We can fix this in our production code:
 
 ```golang
 package main
@@ -343,11 +346,11 @@ Here are all the things this test locks-in:
 - the parameters row and col given to PlaceShip index the 2D array directly
 - the presence of a ship is marked by a string "SHIP"
 
-I don't know about you, but that's a lot of highly specific detail going on there!
+That's a lot of highly specific detail going on there!
 
 ### Why is this bad?
 
-The most obvious reason is that programming interface is bad. The code in our tests is the first working example of our production code being used. So, in the real game, the programmer will have to reach into the Grid, check locations[][] and look for "SHIP" - exactly as our test does.
+The most obvious reason is that this programming interface is bad. The code in our tests is the first working example of our production code being used. So, in the real game, the programmer will have to reach into the Grid, check locations[][] and look for "SHIP" - exactly as our test does.
 
 _That is a lot to know about and a lot to do_
 
@@ -395,8 +398,6 @@ The Good parts of this are:
 - Uses only methods that will be useful to the game
 - No implementation leak so no large, rippling changes in future
 
-Which are good things.
-
 The bad parts:
 
 - We are designing and writing half the game!
@@ -413,7 +414,9 @@ A compromise is to add a method that is useful to the test only.
 
 That itself involves some nuance. We could, of course, keep using the 2D array, keep it private, and a a "getter". So the argument goes, this has "encapsulated" the 2D array. Nonsense and utter rubbish. No it hasn't. Not even slightly. It fully exposes the 2D array.
 
-What happens - with numbing inevitability - is some enterprising fture programmer then uses the "test-on;y" getter to write some spaghetti code. We've lost control of our encapsulation. We've lost control of any design constraints on our programming interface.
+What happens - with numbing inevitability - is some enterprising future programmer will use the "test-only" getter to write some spaghetti code. Technically, using the code smell of [Feature Envy](https://refactoring.guru/smells/feature-envy)
+
+At this point, we've lost control of our encapsulation. We've lost control of any design constraints on our programming interface.
 
 Add ing a getter for test is not the ideal half-way house.
 
@@ -423,7 +426,7 @@ The compromise is a form of access with less potential for damage than exposing 
 
 In a car engine that uses oil (remember those, Tesla fans?) it's important to keep your oil level up inside the engine. The oil is not part of the observable behaviour of the engine - which consists of foot down, speed out. But without the oil, the engine will stop working.
 
-As such, a test-only feature is added so we can check the oil level, but not do anything else with it. We add a dipstick. Literally a stick dipped into the oil reservoir that you can read a level off. But you can't use the dipstick to go modify the design of the engine.
+As such, a test-only feature is added so we can check the oil level, but not do anything else with it. We add a dipstick. Literally a stick dipped into the oil reservoir that you can read a level off. The design of the dipstick makes it hard to gain any real access to the engine, such that you could change how the engine worked.
 
 Here's what it looks like for our test:
 
@@ -439,7 +442,7 @@ func TestPlacesShip(t *testing.T) {
 	grid.PlaceShip(row, column)
 
 	// Assert
-	got := grid.isShipPresent(row, colum)
+	got := grid.isShipPresent(row, column)
 	want := true
 
 	if got != want {
@@ -454,11 +457,11 @@ Our assert now has the best of both worlds - or at least a reasonable compromise
 
 - We're not designing more of the game than PlaceShip
 - We're not exposing ay implementation details
-- Future programmers are discouraged from abusing the isShipPresent() method
+- Future programmers are discouraged from feature envy, as there is no direct access to private data
 
 With the decision made to use the dipstick method, we can go on to implement our production code function PlaceShip().
 
-But first - a philsophical detour.
+But first - a philosophical detour. Who doesn't enjoy those every now and then?
 
 ### Should dipstick methods be temporary or permanent?
 
@@ -470,29 +473,27 @@ Such a wprkflow is called **scaffolding**, like on a building site. Once the bui
 
 At others times, we may find that the dipstick method becomes useful as a private helper in our production code. Then, it makes sense to leave it in permanently.
 
-The trick is to _wait and see_. As part of a fture refactoring step, we retain the option to remove dipstick methods. But it is too early to make that decision now.
+The trick is to _wait and see_. As part of a future refactoring step, we retain the option to remove dipstick methods. But it is too early to make that decision now.
 
-## Make the test compile, then check it fails
+## Back to coding: We need a failing test
 
 Now we've made our choice, let's run the test:
 
-'''bash
-
-# battleships [battleships.test]
-
-/Users/Alan.Mellor/academy/advanced-tdd/chapter04/code/main_test.go:16:14: grid.isShipPresent undefined (type \*Grid has no field or method isShipPresent)
+```bash
+/Users/Alan.Mellor/academy/advanced-tdd/chapter04/code/main_test.go:16:14:
+grid.isShipPresent undefined
+(type Grid has no field or method isShipPresent)
 FAIL battleships [build failed]
-FAIL'
+FAIL
+```
 
-````
-
-This clears us to add the new method on Grid:
+Pretty self-explanatory. This clears us to add the new method on Grid:
 
 ```golang
 func (g *Grid) isShipPresent(row int, col int) bool {
 	return false
 }
-````
+```
 
 Everything compiles, and all three sctions of our test are complete.
 
@@ -500,7 +501,8 @@ To get a basic confidence that our test is looking at the right things, let's ru
 
 ```bash
 --- FAIL: TestPlacesShip (0.00s)
-    /Users/Alan.Mellor/academy/advanced-tdd/chapter04/code/main_test.go:20: Ship was not placed
+    /Users/Alan.Mellor/academy/advanced-tdd/chapter04/code/main_test.go:20:
+    Ship was not placed
 FAIL
 FAIL	battleships	0.280s
 FAIL
@@ -508,7 +510,7 @@ FAIL
 
 Excellent! We have a failing test. We will cover why this is important in more detail in the next chapter. But for now - onwards!
 
-Let's move on to implementing our PlaceShip() production code.
+Let's implement our PlaceShip() production code.
 
 ## Implementing PlaceShip()
 
@@ -603,7 +605,7 @@ ok  	battleships	0.190s
 
 ## Review
 
-This chapter has covvered
+This chapter has covered
 
 - Test behaviour, not implementation
 - Arrange, Act, Assert
