@@ -14,21 +14,24 @@ Game Description:
 
 - Two players play the game
 - Each player has a 7x7 grid
-- Each player places 9 1x1 ships on their grid
+- Each player places 9 ships on their grid
+- Each ship occupies only a single grid location (1x1 size)
 - Players take turns to shoot at their opponent
-- The game is won by the first player to sink all opponent's ships
+- The game is won by the first player to sink all their opponent's ships
 
 ## Where do we start?
 
 This is always an issue, whether we write tests or not!
 
-Let's choose to start with a low-level building block of the game. We will focus on the "happy path" behavious of placing a ship on the grid.
+Let's choose to start with a low-level building block of the game. We will focus on the "happy path" behaviour of placing a ship on the grid.
 
 ### Terminology: happy path, error path, edge case
 
-- _Happy path_: a behaviour that correctly handles valid requests
-- _Error path_: a behaviour that handles an unexpected error, such as invalid user input or system unavailability
-- _Edge case_: a behaviour known to be at the boundary of a happy path and an error path. Many defects arise at edge cases!
+A quick detour on some common terminology:
+
+- **Happy path**: a behaviour that correctly handles valid requests
+- **Error path**: a behaviour that handles an unexpected error, such as invalid user input or system unavailability
+- **Edge case**: a behaviour known to be at the boundary of a happy path and an error path. Many defects arise at edge cases!
 
 ## Placing the first ship on an empty grid
 
@@ -36,13 +39,39 @@ This seems like the most fundamental happy path to go for.
 
 In TDD, we start by writing a test to form an executable specification. These tests have a standard format. They comprise three sections - Arrange, Act, Assert.
 
+> We must _always_ have a failing test before we write any production code
+>
+> Compiler errors count as failing tests
+
 ![Arrange Act Assert](images/arrange-act-assert.png)
 
 ### First step: A failing test because there is no project
 
 Just to emphasise how test-first TDD is, the first thing we will do is to fail a test because we don't even have a Go project yet.
 
-We start by creating a a Go language empty unit test, so we can fill in the three sections:
+We start by creating a a Go language empty unit test.
+
+The first things we need to do are:
+
+- Import the Go test library
+- Write the boiler-plate function for a test (the IDE can help)
+- Think of a good name for the test
+
+### How should we name tests?
+
+Tests are executable specifications. We want to use language that provides a summary of what this specification means. The way I think about this is "When the test passes, what will the code have achieved?"
+
+For our first test, when the code works, it will have placed a ship on the grid.
+
+Converting to a present tense, this becomes "Places Ship". That would be a good headline for the behaviour we are working on.
+
+Go requires that to be a function name, so we remove spaces. The Go test framework mandates that function names of tests begin with Test.
+
+Our final name is the `TestPlacesShip`.
+
+This is concise, descriptive and clear.
+
+Let's add this skeleton test function, and see if it passes or not. Test code:
 
 ```golang
 package main
@@ -58,7 +87,7 @@ func TestPlacesShip(t *testing.T) {
 }
 ```
 
-we save that in our project root directory and call it `main_test.go`.
+We save that in our project root directory and call it `main_test.go`.
 
 We then run all the tests with the command line
 
@@ -66,27 +95,31 @@ We then run all the tests with the command line
 go test ./...
 ```
 
-and we get the error message
+We see the error message
 
 ```bash
 go: cannot find main module
 ```
 
-Which is clear and straight to the point: we can't run anything yet because we have no Go project. We fix that by running the command
+Which is clear and straight to the point. We can't run anything yet because we have no Go project.
+
+Let's fix that by running the command
 
 ```bash
 go mod init battleships
 ```
 
-which creates a new Go module for us, then we can re-run our tests again.
+This creates a new Go module for us.
 
-This time we get a much more friendly
+We can re-run our tests again. This time we get a much more friendly
 
 ```bash
 ok  	battleships	0.274s	coverage: [no statements]
 ```
 
-We have successfully test-driven creating a project. We have followed one cycle of 'Red, Green, Refactor', which will will discuss in detail next chapter. But for now, we've got a basic _rhythm_ of TDD down:
+We have successfully test-driven creating a project!
+
+We have followed one cycle of 'Red, Green, Refactor', which will will discuss in detail next chapter. But for now, we've got a basic _rhythm_ of TDD down:
 
 - Write a failing test
 - Write just enough code to make the test pass
@@ -117,7 +150,7 @@ We'll revisit those in more detail. All of those are behaviours required by our 
 
 > How many tests do we need?
 >
-> Just one per thing we care about working
+> Just one per thing we _care about working_
 
 We can start with placing a single ship on an empty grid.
 
@@ -187,7 +220,13 @@ func NewGrid() *Grid {
 }
 ```
 
-that makes the compiler slightly less grumpy with us. `NewGrid()` has been defined, and it returns something.
+That makes the compiler slightly less grumpy with us. `NewGrid()` has been defined, and it returns something.
+
+> Notice: we don't write the whole test/production code in one go
+>
+> We don't _eat the whole elephant_
+>
+> Iterate in micro-cycles, adding production code as we go
 
 We still have a failing test at this point. The compiler points out that:
 
@@ -195,21 +234,23 @@ We still have a failing test at this point. The compiler points out that:
 
 But that's progress toward our goal in a micro-iteration
 
-> TDD is _really_ agile. It works on rapid feedback over many micro-iterations
+> TDD is _really_ agile. It works on rapid feedback over many suvh micro-iterations
 
-The next step then is to briefly review what we have done so far.
+### Review and possibly improve our work
 
-Yes! That's right - review. Don't mash the keyboard just because half of one line compiles. Is it heading toward the goal still?
+The next step is to briefly review what we have done so far.
 
-It seems to be going well. We don't need to pass any additional parameters into NewGrid() as that function needs no extra information to do its job. It creates an instance of the Grid struct for us and returns it.
+Yes! That's right - review. Don't mash the keyboard just because half of one line compiles. Is it still heading toward the goal?
 
-We can move on.
+We don't need to pass any additional parameters into NewGrid() as that function needs no extra information to do its job. It creates an instance of the Grid struct for us and returns it.
+
+It seems to be going well. We can move on.
 
 ## Coding the Act step
 
-The Act step is where we get our production code to do its thing. It has been set up ready to go in the Arrange step. Now its time to go.
+The Act step is where we get our production code to do its thing. It has been set up ready to go in the Arrange step. Now its time to make it go.
 
-Again, we have some design work to do here:
+We have some design work to do here:
 
 - What should we call the method (or function, or what-have-you)?
 - What extra information will it need from us to do its job?
@@ -220,9 +261,13 @@ What does `PlaceShip()` need to know from us to do its job? As a method, it alre
 
 We need to specify a location, and pass that location into the method call.
 
-That's not as obvious as it seems, as we need another design decision here. I mean who knew that writing code needing _so many_ design decisions?
+That's not as obvious as it seems, as we need another design decision here.
 
-Q: How should we represent the location of the ship?
+> who knew that writing code needing _so many_ design decisions?
+
+### Representing the location of the ship
+
+We need to decide how to represent the location of the ship on the grid. This is a choice.
 
 Note that this has nothing - and I mean _nothing_ - to do with the implementation of how ships are stored. It is our choice. Dear Designer-in-Chief - what would you prefer?
 
@@ -234,7 +279,9 @@ Sensible options (and a few less sensible) include:
 - _Three Little Words_ style, like "dog, banana"
 - OS map grid reference (...I mean...it works for maps, right?)
 
-The last two seem mad. But that's just me. Maybe you see utility in them. The point here is that any of these would be a valid _programming interface_ for our "place a ship on the grid" behaviour.
+The last two seem mad. But that's just me. Maybe you see utility in them. Maybe a future requirement you know is coming up would make them attractive?
+
+The point here is that _any_ of these would be a valid _programming interface_ for our "place a ship on the grid" behaviour.
 
 We decide. Not some framework. Not some implementation detail.
 
@@ -243,7 +290,7 @@ We decide. Not some framework. Not some implementation detail.
 
 I decided to go basic and use that first one. A pair of integers from 0 to 6 inclusive. The first one I pass in will be the row. The second the column.
 
-Let's capture all that information in the test:
+Now that we have specified the programming interface, let's document that decision in the test:
 
 ```golang
 package main
@@ -264,9 +311,9 @@ func TestPlacesShip(t *testing.T) {
 }
 ```
 
-We've added _explaining variables_ `row` and `col` to make it totally clear which parameter is which in the test. If the intent of the test is clear without them, then don't use them. But here, they clarify the roles of the parameters.
+> tests are executable specifications - that makes them living documentation
 
-Remember, tests are executable specifications - and as such, they are also living documentation. Having that skim readability is part of writing good tests.
+We've added _explaining variables_ `row` and `column` to clarify which parameter is which in the test. If the test is clear without them, then don't use them. On balance, they add value here.
 
 > Optimise for clarity
 
@@ -288,16 +335,20 @@ func (g *Grid) PlaceShip(row int, col int) {
 }
 ```
 
+> Again, we're not eating the whole elephant. We have added _minimal_ code to fix that compiler failure.
+>
+> We are working methodically, step-by-step.
+
 The Mighty Compiler is assuaged from its Mighty Anger once again. Which is a good job - because we have a tricky decision to make for our final Assert section.
 
 ## Coding the Assert section
 
 The Assert section is where we specify two things:
 
-- What should have happened
-- How we get at the results
+- **What** should have happened
+- **How** we get at the results
 
-What should have happened is obvious for our test. There should be a ship on the grid where we told it to put one!
+What should have happened is obvious here. There should be a ship on the grid where we told it to put one!
 
 But how we find that out is not as easy as you might think.
 
@@ -305,11 +356,17 @@ But how we find that out is not as easy as you might think.
 
 The goal of TDD is to test observable behaviour - that is, what can we see 'outside the box'. What end result is our code designed to have?
 
-Think back to executable specifications. They define what needs to happen, but place no constraints on how we do that. Our tests work best when we make them free of specification implementation details.
+Think back to executable specifications. They define _what_ needs to happen, but place no constraints on _how_ we do that. Our tests work best when we make them free of specification implementation details.
 
-But this is not always easy to achieve. This fact often accounts for TDD beginners giving up in frustration: "with every code change I make, all my tests keep changing!"
+> The secret to useful TDD is specifying what, not how
 
-Let's look at the most obvious way to write our assert, and the potential problems with it.
+But this is not always easy to achieve. This fact often accounts for TDD beginners giving up in frustration: "with every code change I make, all my tests keep changing!".
+
+> This is _fast feedback_ from TDD warning you about your fragile design.
+>
+> It has nothing to do with the test.
+
+To understand the issues, let's write our test in an obvious way, then review the potential problems with that approach.
 
 ### Bad: asserting against the grid implementation
 
@@ -336,29 +393,49 @@ func TestPlacesShip(t *testing.T) {
 }
 ```
 
-The first thing to notice is the idiomatic way in Go to write an assert. Other languages use assertion libraries (Jest, JUnit/AssertJ, NUnit). Go does not. It uses a simple if statement. Idiomatically, there are always two local variables:
+#### Assertions in Go
+
+The first thing to notice is the idiomatic way in Go to write an assert. This is good. Other languages use assertion libraries (Jest, JUnit/AssertJ, NUnit). Go does not.
+
+Go uses a simple if statement. Idiomatically, there are always two local variables:
 
 - got: the result of our Act step
 - want: what we would like got to be, when everything is working
 
-This test uses the Go idiom, but not in the best way. It locks-in too many implementation details.
+#### What's the problem with this code?
 
-Here are all the things this test locks-in:
+The specified behaviour _locks-in_ too many implementation details.
+
+The test means that all the following things _must_ stay true:
 
 - a private field called 'locations'
-- locations is a two-dimensional array of string
-- the parameters row and col given to PlaceShip index the 2D array directly
-- the presence of a ship is marked by a string "SHIP"
+- locations must be a two-dimensional array of string
+- the parameters row and column passed to PlaceShip index the 2D array directly
+- the presence of a ship must be marked by a string "SHIP"
 
 That's a lot of highly specific detail going on there!
 
-### Why is this bad?
+Do we really care about any of that?
 
-The most obvious reason is that this programming interface is bad. The code in our tests is the first working example of our production code being used. So, in the real game, the programmer will have to reach into the Grid, check locations[][] and look for "SHIP" - exactly as our test does.
+### Why is implementation detail bad?
+
+The point of our executable specification is to define our programming interface, and this one is bad.
+
+The code in our tests is the first working example of our production code being used. Don;t think of this as "test code". Think of it as it really is: this is how everyone will access your component, forevermore.
+
+> If ever there was a time for an "Are you sure?" dialog box, this would be it!
+
+So, in the real game, the programmer will have to reach into the Grid, check `locations[row][column]` and look for `"SHIP"` - exactly as our test does.
 
 _That is a lot to know about and a lot to do_
 
+#### It's easy to call the code wrong
+
 It is easy to make a mistake in the code that uses the result. It will lead to duplicated code. Every place that needs to know if a ship is present _must_ use this code snippet - because this _is_ now our programming interface.
+
+> Prefer to _design-out_ errors, so they cannot arise
+
+#### It's needlessly hard to change implementations in future
 
 The second valid reason is it will be hard to change the implementation of our Grid. This should not matter to the rest of the program. Grid should be responsible for managing ships on its own. But here, the implementation has _leaked out_. This leads to rippling changes where a small change requires a large change in the rest of the program code.
 
@@ -370,7 +447,7 @@ So what else could we do?
 
 A better test would involve understanding why we place ships in the first place. So our opponent can hit them and sink them.
 
-If we think about the overall programming interface, there is no requirement suggesting we need to know where ships are. Player 1 places ships. Player 2 shoots ships. They are told if they hit or miss.
+If we think about the overall programming interface, there is no requirement suggesting we need to know where ships are, outside of that component. Player 1 places ships. Player 2 shoots ships. They are told if they hit or miss.
 
 So our test could look like this:
 
@@ -414,7 +491,7 @@ Is there are half-way house?
 
 ### Private data, public getter?
 
-A compromise is to add a method that is useful to the test only.
+A useful compromise is to add a method that is useful to the test only.
 
 That itself involves some nuance. We could, of course, keep using the 2D array, keep it private, and a a "getter". So the argument goes, this has "encapsulated" the 2D array. Nonsense and utter rubbish. No it hasn't. Not even slightly. It fully exposes the 2D array.
 
@@ -424,7 +501,7 @@ At this point, we've lost control of our encapsulation. We've lost control of an
 
 Add ing a getter for test is not the ideal half-way house.
 
-The compromise is a form of access with less potential for damage than exposing internals: the dipstick method.
+The compromise is to provide a limited form of access with less potential for damage than exposing internals: the dipstick method.
 
 ### Using a dipstick (test-only) method
 
@@ -455,25 +532,25 @@ func TestPlacesShip(t *testing.T) {
 }
 ```
 
-We add a method `isShipPresent(row, column)`. It will check if a ship has been placed at the row, column location. It returns `true` if so.
+We add a dipstick method `isShipPresent(row, column)`. It will check if a ship has been placed at the `(row, column)` location. It returns `true` if so.
 
 Our assert now has the best of both worlds - or at least a reasonable compromise:
 
-- We're not designing more of the game than PlaceShip
-- We're not exposing ay implementation details
+- We're not designing more of the game than needed for PlaceShip
+- We're not exposing any implementation details
 - Future programmers are discouraged from feature envy, as there is no direct access to private data
 
 With the decision made to use the dipstick method, we can go on to implement our production code function PlaceShip().
 
-But first - a philosophical detour. Who doesn't enjoy those every now and then?
+But first - a philosophical detour. And who doesn't enjoy those every now and then?
 
 ### Should dipstick methods be temporary or permanent?
 
-Given the nature of a dipstick method, should we use it to 'get us going' and then remove it later on in the development? Perhaps later, we will have TDDed a ShootAt() function - and then we could revert to our Place/Shoot test?
+Given the nature of a dipstick method, should we use it to 'get us going' and then remove it later on in the development? Perhaps later, we will have TDDed a ShootAt() function - and then we could revert to our PlaceShip/ShootAt test?
 
 Maybe.
 
-Such a wprkflow is called **scaffolding**, like on a building site. Once the building can stand unaided, the scaffolding is removed. It is part of the construction process, not part of the building.
+Such a workflow is called **scaffolding**, like on a building site. Once the building can stand unaided, the scaffolding is removed. It is part of the construction process, not part of the building.
 
 At others times, we may find that the dipstick method becomes useful as a private helper in our production code. Then, it makes sense to leave it in permanently.
 
@@ -528,11 +605,11 @@ Now it is time to _design_ the implementation, to conform to the specification. 
 
 Wrong, of course!
 
-The beuty of TDD is it promotes the idea of _design by contract_. This has had various names over time. Bertrand Meyer coined the exact phrase when writing about his Eiffel language. But the idea dates back to at least Daid L. Parnas and his 1968 paper on Information Hiding.
+The beauty of TDD is it promotes the idea of _design by contract_. This has had various names over time. Bertrand Meyer coined the exact phrase when writing about his Eiffel language. But the idea dates back to at least David L. Parnas and his 1968 paper on Information Hiding.
 
 What the rest of the code sees is our interface. That interface maintains a contract to its consumers. In our case, that contract is "you call PlaceShip(2, 3) and I will place a ship at row 2, column 3".
 
-> A contract is a string promise to the callers of this code
+> A contract is a strong promise to the callers of this code
 
 Behind this contract, we can fulfil the promise any way we like.
 
@@ -546,7 +623,7 @@ This represents the play area as a fixed number of locations (array elements) wh
 
 For our requirements, this data needs to support two business requirements:
 
-1. Shoot: no ship presnt -> player misses
+1. Shoot: no ship present -> player misses
 2. Shoot: ship present -> player hits and ship sinks
 
 The simplest way to do this is to use a two-value system. Each element stores one of two values to indicate presence or absence of a ship.
@@ -561,11 +638,12 @@ But that's not the only game in town. Some other reasonable options are:
 
 - A `uint64` treated as 64 separate bits as a bit field. 1 for ship, 0 for empty. This simplifies the game win detection by being a simple check for zero.
 - A linear array of 49 elements, instead of a 2D array
+- A hash map where they key is based on the location coordinates
 - A slice of `type coordinates struct`. Each ship still unsunk has a coordinate pair like (2,3) placed into this slice
 
 You can see some of these options as branches in the accompanying example code.
 
-The main point here is that _any_ implementation can be chosen, because _all_ implementations fulfil the interface contract.
+> **any** implementation can be chosen, because **all** fulfil the interface contract
 
 ### Exercise for the interested (or otherwise coerced) reader
 
