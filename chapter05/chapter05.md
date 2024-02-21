@@ -12,7 +12,7 @@ In TDD, this is called Red, Green, Refactor - or RGR for short.
 
 These are summarised in this diagram:
 
-![Red-Green-Refactor](images/tdd-rgr-cycle.png)
+![Red-Green-Refactor](/chapter05/images/tdd-rgr-cycle.png)
 
 A TDD cycle follows the same three steps:
 
@@ -259,7 +259,7 @@ Beyond the step by step guides in the refactoring resource, there are some gener
 
 DRY is an acronym for Don't Repeat Yourself. It is about eliminating unnecessary duplication of code. DAMP is just the English word, meaning "not quite DRY".
 
-![Dry versus damp](images/dry-damp.png)
+![Dry versus damp](/chapter05/images/dry-damp.png)
 
 > Production code should be DRY
 >
