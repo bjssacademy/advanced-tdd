@@ -358,6 +358,19 @@ At the end of the refactor phase, we have completed our TDD cycle. Which means w
 
 Software development is fun!
 
+## Exercise
+
+Review your test code and production code from the previous chapter - to Place a ship on an empty grid.
+
+- Can you improve any names to clarify them?
+- Are there any refactoring steps (eg introduce explaining variable) that would clarify the test?
+- Is there any unnecessary complexity in the production code you can remove?
+- Is there are untested behaviour in the code? If so, remove it
+
+This exercise is to apply the Refactor phase to the Reg-Green phases we completed last chapter.
+
+It's ok if you decide the result was 'good enough'. Just remember that we continuously review and improve code in every future RGR cycle.
+
 ## [Next >>](/chapter06/chapter06.md)
 
 Now we've completed one full TDD RGR cycle, it's time to move on to the next cycle.
