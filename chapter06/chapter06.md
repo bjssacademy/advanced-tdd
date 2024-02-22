@@ -1,4 +1,4 @@
-# 06: FIRST tests XXX change me!
+# 06: Moving to the next RGR cycle
 
 ---
 
