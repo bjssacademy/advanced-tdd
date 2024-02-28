@@ -192,6 +192,8 @@ You will see tests that either have their Assert section either missing or broke
 
 Having a missing assert seems weird until you work on a dysfunctional project. Political forces pressurise you into "getting all tests green by close of play" and making the tests lie can be an attractive option. Needless to see, we don;t recommend this. But we have seen it done by other (lower-cost) consultancies. Let's be better.
 
+> Don't worry, dear reader: you _will_ work on a dysfunctional project or two in this industry ...
+
 There is an exception to "missing assert" that is valid. A compile failure is a valid "assertion fail". We can write a test using specific syntax that will fail to compile under the wrong version of language. That's ok, but a little weird and definitely needs a comment.
 
 ## Timely: When is it the wrong time to write a test?
