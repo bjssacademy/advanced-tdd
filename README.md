@@ -12,14 +12,17 @@ It is a key technique to _being agile_. It allows software to be written so that
 - can be broken into small pieces
 - is easier to continuously integrate
 
-This guide will start from the basic rhythms of TDD - individual tests - before
+This guide will start from the basic rhythms of TDD. We will learn the idea behind executable specifications, and how to write them. We will learn the regular workflows behind developing test-first. We will see that this prioritises continuous improvement of code and enables continuous delivery.
 
-As TDD is all about encouraging and experimenting with software design, we will be covering advanced aspects of TDD as they relate to design. These include areas such as
+As TDD is all about encouraging and experimenting with software design, we will be covering aspects of software design as they relate to TDD. These include areas such as:
 
 - Designing software components
 - Dependency Inversion
 - Test Doubles - simulating hard to control dependencies
 - Decoupling from external systems
+- Code as storytelling
+- Separation of concerns
+- Decoupling interface from implementation
 
 By the end, we should be comfortable in understanding what TDD is, how it can be applied to our work, and the benefits it can bring.
 
