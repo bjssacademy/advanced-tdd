@@ -1,33 +1,33 @@
-# 08: TDD and Continuous Delivery
+# 08: designey stuff
 
-rhythms
+more important than normal
+aim cont redesign
 
-- aaa
-- rgr
-- run all tests locally
-- merge from main - this is the CI bit
-- run all tests
-- ci merge to main
+pre-reqs academy
 
-Do not push on red!!
+- Refactoring
+- DIP, DI and IoC
+- Clean Code
+  aldo
+- Ousterhout book
 
-What to do on broken build
+4 rules simple design
 
-- 5 mins forward
-- else revert
+messy AAA gives feedback
 
-When to push to main?
+Accidental v eseential complexity
 
-- green
-- refactor
+Biology - systems grow from simplicity
 
-Cont Int means many times per day
+KISS
 
-Release strategies
+DRY
 
-- commit to live
-- commit to blue/green awaiting live
-- commit to percent traffice live
-- commit to staging
-- low frequence release branch to live
-  -- good for formal/regulated environment
+Generalising code tactics
+(quora ans)
+
+- variables
+- parameters
+- callbacks
+- strategy pattern
+  eg button code example
