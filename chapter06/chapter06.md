@@ -1,4 +1,14 @@
 # 06: Moving to the next RGR cycle
+TDD is all about forward motion, in tiny steps.
+
+After one RGR iteration, our reqard for such good work is ... more work!
+
+> It was ever thus
+
+
+
+
+
 
 ---
 
