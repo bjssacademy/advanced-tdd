@@ -60,7 +60,7 @@ Each test will make clear:
 
 - For a specific setup of our component (Arrange)
 - When we trigger our behaviour with specific inputs (Act)
-- We expect a specific outcome to happen (Assert)
+- We expect a specific outcome (Assert)
 
 ### Designing the programming interface
 

@@ -1,0 +1,21 @@
+TODO topics
+
+triangulation next test (check done)
+design
+Refactor aided by behaviour
+DIP DI and Doubles OO and FP
+Stubs and mocks
+Don’t mock what you don’t own
+External systems
+Classics db random web
+Hexarch ports adapters
+Driven ports
+Driving ports
+Testing use cases
+Should we add close in tests in refactor?
+Avoiding dupes at layer above
+How many tests? Which are needed?
+When to change tests?
+
+Testing error handling
+Simulating ext system failure eg conn loss

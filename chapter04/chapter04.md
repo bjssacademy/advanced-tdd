@@ -67,7 +67,7 @@ Converting to a present tense, this becomes "Places Ship". That would be a good 
 
 Go requires that to be a function name, so we remove spaces. The Go test framework mandates that function names of tests begin with Test.
 
-Our final name is the `TestPlacesShip`.
+Our final name is then `TestPlacesShip`.
 
 This is concise, descriptive and clear.
 
@@ -505,11 +505,11 @@ The compromise is to provide a limited form of access with less potential for da
 
 ### Using a dipstick (test-only) method
 
-In a car engine that uses oil (remember those, Tesla fans?) it's important to keep your oil level up inside the engine. The oil is not part of the observable behaviour of the engine - which consists of foot down, speed out. But without the oil, the engine will stop working.
+In a car engine that uses oil (remember those, Tesla fans?) it's important to keep your oil level topped-up inside the engine. The oil is not part of the observable behaviour of the engine - which consists of foot down, speed out. But without the oil, the engine will stop working.
 
 As such, a test-only feature is added so we can check the oil level, but not do anything else with it. We add a dipstick. Literally a stick dipped into the oil reservoir that you can read a level off. The design of the dipstick makes it hard to gain any real access to the engine, such that you could change how the engine worked.
 
-Here's what it looks like for our test:
+Here's what a dipstick method looks like for our test:
 
 ```golang
 func TestPlacesShip(t *testing.T) {
