@@ -10,13 +10,15 @@ Let's start by describing what it is that TDD brings to the front of programming
 
 ## What does TDD emphasise, exactly?
 
-We've learned that test are executable specificcations of behaviour. Each test captures a desired outcome of running some code, together with the desired programming interface to that code. Tests aim to exercise software components in isolation (at some granularity or other), leading to a need to make them self-contained.
+Tests specify the behaviour and programming interface to our code. Tests aim to exercise software components in isolation (at some granularity or other), leading to a need to make them self-contained.
 
-This has a driving force towards three higly desirable design properties.
+This has a driving force towards three higly desirable design properties: encapsulation, low coupling and abstraction.
 
 ### Encapsulation
 
-Encapsulation means that we understand a software component only in terms of its inputs and outputs, not by its inner works. It is as if the implementation of the component has been encapsulated in a thick, opaque plastic resin. We see the connections to the oustide world, but we don't know the secrets of how it works inside.
+Encapsulation means that we understand a software component only in terms of its inputs and outputs, not by its inner workings.
+
+It is as if the implementation of the component has been encapsulated in a thick, opaque plastic resin. We see the connections to the oustide world, but we don't know the secrets of how it works inside.
 
 ![Encapsulation](images/encapsulation.png)
 
@@ -33,13 +35,13 @@ This simplicity of use a goal of all software design, at every granularity. It i
 
 ### Decoupling
 
-Coupling refers to how connected something is to other system components. We prefer less coupling between components generally.
+Coupling refers to how connected something is to other system components. We prefer less coupling between components generally. If two things are coupled, then a change in one requires a change in the other. If many things are coupled, changing that software becomes next to impossible. Goodbye, agile project!
 
 ![Coupling and cohesion in application layers](images/application-layers-cohesion-decoupling.png)
 
 The deeper that components become intertwined, the harder it is to understand them apart. It is also harder to change one without breaking the other. Such systems are harder to test, harder to maintain and harder to replace with new tech.
 
-The previous diagram shows a layered application. Note that while it uses SQL to talk to a database, the details are hidden from everywhere else. Upgrading the database might need changes to the SQL. But you would not see changes in the application logic, JSON API or the React UI Components. This is an example of _abstracting the database away_ so the we can _decouple layers_.
+The previous diagram shows a decoupled application. Take the SQL database as an example. The details of SQL are hidden from everywhere component except for the database and the data access components. Upgrading the database might need changes to the SQL. But you would not see changes in the application logic, JSON API or the React UI Components. This is an example of _abstracting the database away_ so the we can _decouple layers_.
 
 Decoupling goes hand in hand with abstraction.
 
