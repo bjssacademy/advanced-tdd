@@ -204,6 +204,6 @@ Other options exist, and provide more limited feedback.
 
 ## Next
 
-If we have tests which are not FIRST, we don't have to stay stuck with them.
+In the next chapter, we'll look into some key software design ideas, that work across all domains and all programming paradigms.
 
-In the next chapter, we'll look into design patterns to get us back on the FIRST track.
+[Next Chapter >](/chapter08/chapter08.md)
