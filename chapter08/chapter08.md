@@ -53,7 +53,7 @@ Think about the problem of getting to work:
 
 ![Abstraction](images/abstraction.png)
 
-The overall goal is to get to your desk. We can achieve that goal by taking the bus, cycling or taking the train. Well, we can unless your train is run by Northern Rail. But that aside, the exact _implementation_ or our _travel somehwere_ abstraction isn't as important as the fact we need to travel - somehow.
+The overall goal is to get to your desk. We can achieve that goal by taking the bus, cycling or taking the train. Well, we can unless your train is run by Northern Rail. But that aside, the exact _implementation_ of our _travel to work_ abstraction isn't as important as the fact we need to travel - somehow.
 
 This is what abstraction is - finding the essence of a problem.
 
