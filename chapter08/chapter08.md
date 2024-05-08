@@ -20,7 +20,7 @@ Encapsulation means that we understand a software component only in terms of its
 
 ![Encapsulation](images/encapsulation.png)
 
-We see this in real life all the time. We know what our smart phone does; we have no need to know exactly how it works. The same with our car, out kettle and even a wall clock. We understand what they do, and how we are to use them. We don;t need to know how they work inside to do that.
+We see this in real life all the time. We know what our smart phone does; we have no need to know exactly how it works. The same with our car, out kettle and even a wall clock. We understand what they do, and how we are to use them. We don't need to know how they work inside to do that.
 
 This gives two major benefits:
 
@@ -29,7 +29,7 @@ This gives two major benefits:
 
 Something with a complex inner working can have the simplest of external connections.
 
-This is a goal of all software design. It is critical to breaking down a problem.
+This simplicity of use a goal of all software design, at every granularity. It is critical to breaking down a problem. It _is_ how we break down a problem.
 
 ### Decoupling
 
@@ -39,11 +39,21 @@ Coupling refers to how connected something is to other system components. We pre
 
 The deeper that components become intertwined, the harder it is to understand them apart. It is also harder to change one without breaking the other. Such systems are harder to test, harder to maintain and harder to replace with new tech.
 
+The previous diagram shows a layered application. Note that while it uses SQL to talk to a database, the details are hidden from everywhere else. Upgrading the database might need changes to the SQL. But you would not see changes in the application logic, JSON API or the React UI Components. This is an example of _abstracting the database away_ so the we can _decouple layers_.
+
+Decoupling goes hand in hand with abstraction.
+
 ### Abstraction
 
 The goal of decoupling and encapsulation is to capture the _essence_ of a problem.
 
+Think about the problem of getting to work:
+
 ![Abstraction](images/abstraction.png)
+
+The overall goal is to get to your desk. We can achieve that goal by taking the bus, cycling or taking the train. Well, we can unless your train is run by Northern Rail. But that aside, the exact _implementation_ or our _travel somehwere_ abstraction isn't as important as the fact we need to travel - somehow.
+
+This is what abstraction is - finding the essence of a problem.
 
 Thinking back to our battleships grid, the abstraction is a store for ships placed at locations, a way to place them, and a way to record what happens when we take a shot.
 
@@ -51,7 +61,7 @@ This is an abstraction of the problem. So long as we have those concepts availab
 
 > Abstraction: The essence of a problem. What remains true even as we change implementation
 
-## Relevant to all paradigms
+## Design concepts are relevant to all paradigms
 
 It's important to note that these concepts are important in every programming paradigm, every problem domain and across every language.
 
