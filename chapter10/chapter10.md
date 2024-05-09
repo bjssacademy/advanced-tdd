@@ -135,7 +135,7 @@ In all cases, working so that we _could_ do Gold Standard CI/CD will allow us to
 Two excellent books cover these wider aspects of "how do we get stuff delivered to users":
 
 - [Modern Software Engineering](https://learning.oreilly.com/library/view/-/9780137314942/), Dave Farley
-- [Continuous Delivery](Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation), Jez Humble and Dave farley
+- [Continuous Delivery](https://learning.oreilly.com/library/view/-/9780321670250/), Jez Humble and Dave farley
 
 ## Next
 
