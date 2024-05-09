@@ -204,6 +204,6 @@ Other options exist, and provide more limited feedback.
 
 ## Next
 
-In the next chapter, we'll look into some key software design ideas, that work across all domains and all programming paradigms.
+In the next chapter, we'll look into some key software design ideas, that work across all domains and all programming paradigms, before using these ideas to keep FIRST tests FIRST in chapter 9.
 
 [Next Chapter >](/chapter08/chapter08.md)
