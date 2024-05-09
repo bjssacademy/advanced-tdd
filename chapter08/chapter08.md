@@ -131,13 +131,13 @@ Assume we start implementation first, and we decide to use a 2D array to store s
 
 _But what if we use a carrier pigeon instead?_
 
-I'm glad you asked, because that weakens the position considerably. Our cariier pigeon, Percival Peckwith, isn't remotely interested in your 2D array. Percy will have to trust that the ship location is stored, but doesn't care how. Nor does Percy care about zero-based array indices to specify a location. He will just take the location, and pass the request on.
+I'm glad you asked, because that weakens the position considerably. Our carrier pigeon, Percival Peckwith, isn't remotely interested in your 2D array. Percy will have to trust that the ship location is stored, but doesn't care how. Nor does Percy care about zero-based array indices to specify a location. He will just take the location, and pass the request on.
 
 To find our abstraction, we:
 
 - Assume storage is taken care of
 - Need to communicate a request to store a ship at a location
-- Decide on coordinate system for that location
+- Decide on a coordinate system for that location
 
 So we might decide on an abstraction like this:
 
@@ -177,7 +177,9 @@ func main() {
 }
 ```
 
-The choice here to go with the 2D array to store ships is relatively unimportant. the `PlaceShip` code will have to translate between the "A1" style location we chose to the array-friendly `[0][0]` subscripts.
+The choice here to go with the 2D array to store ships is relatively unimportant. The `PlaceShip` code will have to translate between the "A1" style location we chose to the array-friendly `[0][0]` subscripts.
+
+> Key TDD Point: We do not have to 'ripple out' implementation details through our interface. We choose as designers. We can translate in the implementation.
 
 ### Decoupling
 
@@ -282,7 +284,7 @@ The guesses will be wrong, generally. You then are stuck with bloated code that 
 - The code is way more complex than it ever needed to be
 - The design fails to support the actual change
 - The design you added actively gets in the way of the change!
-- Future maintainers cannot tell that this over-design serves no purpose. It looks like real code.
+- Future maintainers cannot tell that this over-design serves no purpose. It looks like real code to them.
 
 The best plan is to restrict future planning. Accommodate short-term known growth, yes. But resist long term "flexible, configurable" rabbit holes.
 
