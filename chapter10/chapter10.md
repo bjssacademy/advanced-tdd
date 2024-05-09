@@ -122,7 +122,6 @@ The most powerful is called Continuous Delivery (CD), which means each change we
 
 But we can weaken this, if it suits needs:
 
-- CD: commit to live immediately
 - Staging: commit to blue/green awaiting live
 - Progressive rollout: commit to small percentage of users live, then expand
 - Quality Control Step: commit to a staging envirnoment, not live, for further testing
@@ -133,7 +132,7 @@ In all cases, working so that we _could_ do Gold Standard CI/CD will allow us to
 
 ## Further Reading
 
-Two excellent boks cover these wider aspects of "how do we get stuff delivered in the round":
+Two excellent books cover these wider aspects of "how do we get stuff delivered to users":
 
 - [Modern Software Engineering](https://learning.oreilly.com/library/view/-/9780137314942/), Dave Farley
 - [Continuous Delivery](Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation), Jez Humble and Dave farley
