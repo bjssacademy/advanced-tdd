@@ -88,13 +88,23 @@ We never push on red. We never push without integrating locally.
 
 Sometimes, we will break the build due to an oversight. Get the build back working quickly. We don't want to block the team from their integration work.
 
+### Kent Beck's super-extreme idea
+
+This is worth experimenting with: Test and commit or revert.
+
+Have a look at the orignal article [Test & commit || Revert](https://medium.com/@kentbeck_7670/test-commit-revert-870bbd756864).
+
+It seems impractical - maybe it is - but this will hone your skills in working in tiny batches of work, with little waste.
+
 ## Continuous Integration means many times per day
 
 We need to work in a different way to do CI.
 
-No more writing 1,000 lines of code in one session. No more giant functions. No more God Classes. No more hiding away for a month without talking to anybody.
+No more writing 1,000 lines of code in one session, without running it. No more giant functions. No more God Classes. No more hiding away for a month without talking to anybody.
 
-Continuous Integration means organising our personal work increments so we can integrate several times a day.
+Continuous Integration means organising our personal work increments so we can integrate several times a day. It means recognising that we are part of one team.
+
+> CI is one technical way we can live the BJSS Value _We win and lose as a team_
 
 If we are integrating once at the end of each sprint, we missed the CI memo. This is waterfall, pure and simple, with a separate Integration Phase at the end. Congratulations, the 1970s called and wanted you back.
 
