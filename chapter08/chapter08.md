@@ -234,9 +234,19 @@ Ths advice says well-designed code has four properties:
 
 ## How TDD helps reveal design flaws
 
-messy AAA gives feedback
+TDD provides fast feedback on our design choices.
 
-Biology - systems grow from simplicity
+Every test has three sections, Arrange, Act and Assert. These are specifications for three things:
+
+- Arrange: How easy is the code to setup, connect and configure?
+- Act: How easy is the code to use, to do its main purpose?
+- Assert: How easy is it to get at the results?
+
+If you critically review each test section, you will see where improvements can be made. For instance, if the Arrange section is full of configuration, we could add useful defaults. If it needs to wire together many different components, we could consider a helper to simplify. We could consider using a [factory method](https://refactoring.guru/design-patterns/factory-method), [Builder](https://refactoring.guru/design-patterns/builder), or [extract an object](https://refactoring.com/catalog/introduceParameterObject.html) from the parameter list) to help.
+
+The same goes for the Act and Assert sections. Each one accurately reflects what this component is like to use, for real. If any section looks difficult to understand, or has any kind of gotchas, it is time to simplify.
+
+Note that we can do this _before_ we write any production code. One benefit of writing the test first is we get to see the design as we intend it, before we implement.
 
 ## Three general principles
 
