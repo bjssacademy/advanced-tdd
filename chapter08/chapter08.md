@@ -12,6 +12,8 @@ Let's start by describing what it is that TDD brings to the front of programming
 
 Tests specify the behaviour and programming interface to our code. Tests aim to exercise software components in isolation (at some granularity or other), leading to a need to make them self-contained.
 
+![TDD Emphasises design](images/tdd-emphasises-design.png)
+
 This has a driving force towards three higly desirable design properties: encapsulation, low coupling and abstraction.
 
 ### Encapsulation
@@ -179,7 +181,9 @@ func main() {
 
 The choice here to go with the 2D array to store ships is relatively unimportant. The `PlaceShip` code will have to translate between the "A1" style location we chose to the array-friendly `[0][0]` subscripts.
 
-> Key TDD Point: We do not have to 'ripple out' implementation details through our interface. We choose as designers. We can translate in the implementation.
+> Key TDD Point: We do not have to 'ripple out' implementation details through our interface.
+> We _choose_ as designers.
+> We can translate in the implementation.
 
 ### Decoupling
 
