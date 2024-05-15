@@ -68,7 +68,7 @@ class Car extends React.Component {
 }
 ```
 
-Modern React favours a more Functional Programming (FP) approach to producing components, rather than the Object Oriented (OO) version above. But both styles are examples of components.
+[Modern React](https://github.com/bjssacademy/react-basics/blob/main/readme.md) favours a more Functional Programming (FP) approach to producing components, rather than the Object Oriented (OO) version above. But both styles are examples of components.
 
 Note:
 
