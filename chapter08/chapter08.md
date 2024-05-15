@@ -182,7 +182,7 @@ func main() {
 The choice here to go with the 2D array to store ships is relatively unimportant. The `PlaceShip` code will have to translate between the "A1" style location we chose to the array-friendly `[0][0]` subscripts.
 
 > Key TDD Point: We do not have to 'ripple out' implementation details through our interface.
-> We _choose_ as designers.
+> We _choose_ to separate interface from implementation as designers.
 > We can translate in the implementation.
 
 ### Decoupling
