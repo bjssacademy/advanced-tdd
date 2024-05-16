@@ -2,7 +2,9 @@
 
 TDD is all about forward motion, in tiny steps.
 
-After one RGR iteration, our reqard for such good work is ... more work!
+After one RGR iteration, our reward for such good work is ... more work!
+
+![Good work gets more work](images/more-work.png)
 
 > It was ever thus
 

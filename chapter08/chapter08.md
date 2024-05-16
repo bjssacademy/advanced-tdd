@@ -47,6 +47,12 @@ The previous diagram shows a decoupled application. Take the SQL database as an 
 
 Decoupling goes hand in hand with abstraction.
 
+That said, you need some coupling, or else nothing could talk to anything else!
+
+See Dave Farley's video below discussing the different kinds of coupling and how to make best use of them:
+
+[![Dave Farley youtube about coupling](https://img.youtube.com/vi/plMttQWztRM/0.jpg)](https://www.youtube.com/watch?v=plMttQWztRM)
+
 ### Abstraction
 
 The goal of decoupling and encapsulation is to capture the _essence_ of a problem.
