@@ -75,7 +75,7 @@ In practice, adopting a structured appraoch can help us.
 
 A useful approach is named Zombies, by James Grenning. The original article is [here](https://blog.wingman-sw.com/tdd-guided-by-zombies).
 
-![zombies graphic](images/zombies.jpg)
+![zombies graphic](images/zombies.png)
 
 --
 describe
