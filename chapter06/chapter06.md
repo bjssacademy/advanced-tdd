@@ -31,13 +31,13 @@ We want calculate the total price of items in a shopping basket. The simplest ha
 Our test is then:
 
 ```
-TestTotalForSingleItem
+TestTotalSingleItem
 ```
 
 The code for that test might look like this:
 
 ```golang
-func TestTotalForSingleItem(t *testing.T) {
+func TestTotalSingleItem(t *testing.T) {
 
     basket := basket.New()
     basket.add( "Pizza", 495 )
