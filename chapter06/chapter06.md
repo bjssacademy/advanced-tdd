@@ -36,7 +36,7 @@ TestTotalForSingleItem
 
 The code for that test might look like this:
 
-```
+```golang
 func TestTotalForSingleItem(t *testing.T) {
 
     basket := basket.New()
