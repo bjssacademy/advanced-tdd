@@ -49,7 +49,7 @@ Decoupling goes hand in hand with abstraction.
 
 That said, you need some coupling, or else nothing could talk to anything else!
 
-See Dave Farley's video below discussing the different kinds of coupling and how to make best use of them:
+See Dave Farley's video below discussing the different kinds of coupling and how to make best use of them (click on the image):
 
 [![Dave Farley youtube about coupling](https://img.youtube.com/vi/plMttQWztRM/0.jpg)](https://www.youtube.com/watch?v=plMttQWztRM)
 
