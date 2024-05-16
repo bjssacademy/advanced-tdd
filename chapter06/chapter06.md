@@ -22,7 +22,7 @@ The order we take these steps often leaves an imprint in our implementation. Som
 
 Where should we start? A simple _happy path_.
 
-A \_happy path means the simplest example of the software being used successfully. Writing a test to specify this simplest case will drive out basic, useful functionality.
+A happy path means the simplest example of the software being used successfully. Writing a test to specify this simplest case will drive out basic, useful functionality.
 
 We can look at a shopping basket example.
 
@@ -67,6 +67,17 @@ But after this, what next?
 
 ## Triangulation - iterating towards complete behaviour
 
+In theory, we can write tests in any order, implement the code in any order, and clean up during the refactor steps.
+
+In practice, adopting a structured appraoch can help us.
+
+### Coding ZOMBIES
+
+A useful approach is named Zombies, by James Grenning. The original article is [here](https://blog.wingman-sw.com/tdd-guided-by-zombies).
+
+![zombies graphic](images/zombies.jpg)
+
+--
 describe
 
 more specific tests - more generalised code
