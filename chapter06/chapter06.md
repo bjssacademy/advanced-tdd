@@ -14,19 +14,27 @@ This chapter offers some useful ideas on thinking about how we drive our design 
 
 ## What will drive the design best?
 
-We use tests to drive our software design as well as the order we add details to our implementation. We are composing the overall solution from small steps, one test at a time.
+With TDD, we use tests to drive our software design. We use the _order_ of tests we implement to control which details we add when. We are composing the overall solution from small steps, one test at a time.
+
+The order we take these steps often leaves an imprint in our implementation. Some orders give better results than others.
 
 ### Start with a happy path
 
-The best test to write first is a _happy path_ test. This means the simplest example of the software being used successfully.
+Where should we start? A simple _happy path_.
 
-Take code to calculate the total price of items in a shopping basket. The simplest happy path to check is that a basket with one item in it calculates the total as being the price of that one item:
+A \_happy path means the simplest example of the software being used successfully. Writing a test to specify this simplest case will drive out basic, useful functionality.
+
+We can look at a shopping basket example.
+
+We want calculate the total price of items in a shopping basket. The simplest happy path to check is that a basket with one item. The total must be the price of that item.
+
+Our test is then:
 
 ```
 TestTotalForSingleItem
 ```
 
-This might look like this:
+The code for that test might look like this:
 
 ```
 func TestTotalForSingleItem(t *testing.T) {
@@ -43,7 +51,9 @@ func TestTotalForSingleItem(t *testing.T) {
 }
 ```
 
-We check that the single item priced at 495 results in that figure as the total.
+We check that the single item priced at 495 results in that figure as the total. We've specified that we will use an OOP approach, with a `total()` method on a basket object.
+
+Our initial implementation can simply return the value 495 from `total()`. That gets our programming interface locked in, and our first test passing.
 
 ### Avoid weird stuff to start with
 
@@ -51,7 +61,7 @@ By _weird stuff_, we mean error cases, boundary conditions and any other complex
 
 All these things need developing, of course. But if we _start_ there, we tend to bend our design out of shape. The code no longer succinctly describes the expected normal behaviour. Instead, it reads out as being mainly a list of stuff that can go wrong.
 
-Starting withthe simplest happy path ensures that our implementation has a sane foundation.
+Starting with the simplest happy path makes for a sane foundation. The code must draw attention to how it works when it solves the intended problem.
 
 But after this, what next?
 
