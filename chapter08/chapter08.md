@@ -409,6 +409,8 @@ func fetchUsername( id int, onError func() ) string {
 }
 ```
 
+(see this working [in this playground](https://goplay.tools/snippet/-_mRLWy_Tdj))
+
 This is an example of varying behaviour by passing in a function. It is analogous to the Object Oriented _Strategy_ Design Pattern. This is where we pass an object instead of a function, and some method on the passed-in object gets called. For more details on Strategy, see [here](https://refactoring.guru/design-patterns/strategy)
 
 ## Further Reading
