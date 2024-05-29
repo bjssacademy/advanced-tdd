@@ -13,7 +13,7 @@ Here are ten common problems that will Torpedo your TDD.
 - Reason: Testing implementation details instead of observable behaivour
 - Symptom: It's not possible to change the implementation of the code under test without breaking tests.
 - Solution: Test only the public behaviour of the component
-- Workround: If we can;t do that for some reason, consider using a _dipstick method_
+- Consider: If we can't do that for some reason, consider using a _dipstick method_
 
 ## 2 Testing the whole elephant
 
@@ -66,7 +66,7 @@ Testing one thing _can_ use a custom assert to check several related results. A 
 
 - Reason: Tests rely on a mock of a third-party service. The third-party has changed their API. The mock has not been updated.
 - Symptom: Tests pass, but using the code for real fails.
-- Solution:
+- Solution: Add a [Contract Test](https://martinfowler.com/bliki/ContractTest.html) for the third-party service
 
 ## 8 Testing the mock
 
