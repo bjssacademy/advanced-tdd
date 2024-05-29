@@ -4,7 +4,7 @@ If you've been in the industry for a while, you will have heard that using TDD "
 
 When this happens, it's generally through using some anti-patterns.
 
-Here are ten common problems that will tropedo your TDD.
+Here are ten common problems that will Torpedo your TDD.
 
 ## 1 Fragile tests
 
@@ -20,7 +20,7 @@ Here are ten common problems that will tropedo your TDD.
 "These tests are huuuuuge - hundreds of lines!"
 
 - Reason: A single test is testing too much.
-- Symptom: COmplex Arrange section, Multiple Act steps per test,Many Asserts per test
+- Symptom: Complex Arrange section, Multiple Act steps per test,Many Asserts per test
 - Solution: Split tests to test only one thing
 - Solution: Consider parameterised tests or extracting helper functions to reduce duplicated code in the tests. But DAMP tests are generally better.
 
@@ -28,7 +28,7 @@ Testing one thing _can_ use a custom assert to check several related results. A 
 
 ## 3 Tests with embedded logic
 
-"I can't beleive I'm having to debug the test code!"
+"I can't believe I'm having to debug the test code!"
 
 - Reason: Tests have conditional/loop logic inside them
 - Symptom: Difficult to follow what the test is doing
