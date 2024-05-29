@@ -250,9 +250,9 @@ As we progress, we add more detailed tests. This drives out _more generalised_ c
 
 ## Deleting and Changing tests
 
-Generally in TDD, we add tests. We build out the capabilities of our code one test at a time. This leaves us with a regression test suite.
+Generally in TDD, we add tests. We build out the capabilities of our code one test at a time. This leaves us with a regression test suite that grows in size and coverage.
 
-But sometimes we need to either delete tests, or change tests.
+But sometimes we need to either delete or change tests.
 
 As these leave us vulnerable to regression defects, it's worth thinking carefully about this.
 
@@ -263,15 +263,15 @@ There are two main reasons where a test is no longer useful:
 - Scaffolding tests
 - Feature deletion
 
-Scaffolding tests are trivial tests that get us started. Think of a test that proves we can instantiate an object. It tests no behaviour and no further outcome. It's ok to write this to get started, perhaps. But as soon as we have a real test for behaviour, we don;t need it anymore.
+Scaffolding tests are trivial tests that get us started. Think of a test that proves we can instantiate an object. It tests no behaviour and no further outcome. It's ok to write this to get started, perhaps. But as soon as we have a real test for behaviour, we don't need the scaffolding anymore.
 
-Feature deletion happens in agile projects as the product moves away from a feature. Maybe we don;t need a "repeat this order" feature any more. In this case, we should update our tests - and code - to get rid of the feature. Dragging around unused features only complicates future development and often hides security vulnerabilities.
+Feature deletion happens in agile projects. The product moves away from a feature. Maybe we don't need a "repeat this order" feature any more. We should update our tests - and code - to get rid of the feature. Dragging around unused features only complicates future development. It may well hide an exploitable security vulnerability as well.
 
 #### How to safely delete tests
 
 Scaffolding tests are easy to remove: Delete the test. Check all remaining tests pass. No changes to component code are required, as it still behaves the same. It's just that other tests now cover the very basic aspects of behaviour.
 
-Removing a feature needs more care. The following steps are good:
+Removing a feature needs more care. The following steps allow us to work in small steps, keeping code working:
 
 - Identify every test surrounding the feature
 - For each one, remove the production code powering the feature
@@ -279,7 +279,7 @@ Removing a feature needs more care. The following steps are good:
 - Remove that test
 - Repeat for all tests related to that feature
 
-By using a systematic approach, we can deletea feature in small steps, hopefully missing nothing.
+By using a systematic approach, we can delete a feature in small steps, hopefully missing nothing.
 
 ### When to change tests
 
@@ -292,7 +292,7 @@ Tests will only change for two reasons:
 
 Both are valid reasons. They need care though.
 
-We want to keep working in small steps, keeping our code working. We don;t want to spend a long time with the code not building and tests not passing.
+We want to keep working in small steps, keeping our code working. We avoiding long periods with the code not building and tests not passing.
 
 The safest way is to duplicate the existing tests, then adjust the duplicates to match wither the new behaviour, or the new interface.
 
@@ -312,7 +312,7 @@ func (b *Basket) AddItem( price float )
 To using a Money object with a currency built in to it:
 
 ```golang
-func (b *Basket) AddItem( amount Money )
+func (b *Basket) AddItemMoney( amount Money )
 ```
 
 We could:
@@ -322,10 +322,10 @@ We could:
 - Refactor the old 'price' code to delegate to the new (Money) methods
 - Remove the old price implementation
 
-An example of this ckind of refactor would look like this:
+An example of this kind of refactor would look like this:
 
 ```golang
-func (b *Basket) AddItem( price float ) {
+func (b *Basket) AddItemMoney( price float ) {
     amount := Money{price: price, currency:"GBP"}
     b.AddItem(amount)
 }
@@ -333,9 +333,11 @@ func (b *Basket) AddItem( price float ) {
 
 You can see that we have converted the price float into a Money object, and have added a default currency.
 
-Over time, we can remove all the tests relating to the old 'float price' design. We can inline out the various method calls to call the AddItem(Money) API instead.
+Over time, we can remove all the tests relating to the old 'float price' design. We can inline the various method calls to call the AddItemMoney(Money) API instead.
 
-This gives us an iterative, safe approach to migrating the API to our code.
+Once that has been done, we could rename `AddItemMoney` to `AddItem`. Go does not support method overloading (same name, different parameters), so we have to work in two steps.
+
+This approach gives us an iterative, safe way to migrating the API to our code.
 
 ## Next: FIRST tests - the secret to usable tests
 
