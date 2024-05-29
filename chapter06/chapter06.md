@@ -157,13 +157,14 @@ A core part of keeping software simple is to _amplify the essential, hide the ir
 What could we hide above?
 
 - We could make basket create its own 'addition engine' with usable default setings
-- If we continued with the "Item Provider" approach, we could pass only that in to a 'contructor' method
-- We could siplify the next of `FetchAndAddNextItem` to `NextItem'
-- 'NextItem' could do its own check for more items
+- If we continued with the `ItemProvider` approach, we could pass only that in to a 'constructor' method
+- We could simplify the name of `FetchAndAddNextItem` to `NextItem`
+- `NextItem` could do its own check for more items
 - We can add a method to get the final total, including rounding
 
 The improved code (and it is, really) would look like this:
 
+```golang
 func TestTotalForTwoItems(t \*t.Testing) {
 // Arrange
 itemProvider := ItemProvider{}
@@ -186,7 +187,7 @@ That has much less cognitive loading to figure out what's going on.
 
 We could take it further:
 
-
+```golang
 func TestTotalForTwoItems(t *t.Testing) {
     // Arrange
     itemProvider := ItemProvider{}
