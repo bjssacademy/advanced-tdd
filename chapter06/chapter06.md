@@ -217,9 +217,9 @@ For our shopping basket, an example would be attempting to add an unknown item t
 basket.Add("Never Heard Of This Product", 999)
 ```
 
-As ever, this needs a bit of designthinking. What should we do? It's up to us to decide.
+As ever, this needs a bit of design thinking. What should we do? It's up to us to decide.
 
-One reasonable decision is to make the basket collaborate with something that knows our inventory. If the product is not found, our add() method should return a Go error.
+One reasonable decision is to make the basket collaborate with something that knows our inventory. If the product is not found, our `Add()` method should return a Go error.
 
 We can write our test:
 
@@ -236,7 +236,7 @@ func TestRejectsUnknownItem(t *testing.T) {
 }
 ```
 
-Obviously, we could make other decisions. Maybe `Add()` should not check anything, and that is done elsewhere. The basket could simply silently fail, and not add the unknown item. That sounds suitably only for a student exercise, but you never know.
+Obviously, we could make other decisions. Maybe `Add()` should not check anything, and that is done elsewhere. The basket could simply silently fail, and not add the unknown item. That sounds suitable only for a student exercise, but you never know.
 
 Writing tests for exceptional behaviours - and the code that handles them - is a critical part of writing robust software.
 
@@ -248,17 +248,96 @@ At the start, our tests are very general, and our implementation is very specifi
 
 As we progress, we add more detailed tests. This drives out _more generalised_ code in our implementation.
 
----
+## Deleting and Changing tests
 
-BIG SUB HEAD: WHEN to change or delete tests
+Generally in TDD, we add tests. We build out the capabilities of our code one test at a time. This leaves us with a regression test suite.
 
-HOW to migrate an interface step by step
+But sometimes we need to either delete tests, or change tests.
 
-Eg PlaceShip( row col ) -> PlaceShip( Location ) work through
+As these leave us vulnerable to regression defects, it's worth thinking carefully about this.
 
-BIG SUB HEAD LAYERED TESTS and test pyramid
+### When to delete tests
 
-- Avoiding dupe tests
-- Ideally one test per behaviour
-- Balance close-in to boundaries
-- Talk about test layer being a fixed point
+There are two main reasons where a test is no longer useful:
+
+- Scaffolding tests
+- Feature deletion
+
+Scaffolding tests are trivial tests that get us started. Think of a test that proves we can instantiate an object. It tests no behaviour and no further outcome. It's ok to write this to get started, perhaps. But as soon as we have a real test for behaviour, we don;t need it anymore.
+
+Feature deletion happens in agile projects as the product moves away from a feature. Maybe we don;t need a "repeat this order" feature any more. In this case, we should update our tests - and code - to get rid of the feature. Dragging around unused features only complicates future development and often hides security vulnerabilities.
+
+#### How to safely delete tests
+
+Scaffolding tests are easy to remove: Delete the test. Check all remaining tests pass. No changes to component code are required, as it still behaves the same. It's just that other tests now cover the very basic aspects of behaviour.
+
+Removing a feature needs more care. The following steps are good:
+
+- Identify every test surrounding the feature
+- For each one, remove the production code powering the feature
+- Check the relevant test now fails
+- Remove that test
+- Repeat for all tests related to that feature
+
+By using a systematic approach, we can deletea feature in small steps, hopefully missing nothing.
+
+### When to change tests
+
+Changing tests is less common. If we follow a behaviour-first approach, we are free to change the implementation of our component without changing the test.
+
+Tests will only change for two reasons:
+
+- We want different observable behaviour from the component
+- We want a different programming interface
+
+Both are valid reasons. They need care though.
+
+We want to keep working in small steps, keeping our code working. We don;t want to spend a long time with the code not building and tests not passing.
+
+The safest way is to duplicate the existing tests, then adjust the duplicates to match wither the new behaviour, or the new interface.
+
+The trick is to keep the old tests working as we build out the new capability, one test at a time.
+
+It is often best to
+
+- Write the new implementation with the new behaviour or interface
+- Refactor the existing old code to call out to the new implementation
+
+As an example if we wanted to change the interface of our shopping basket from price only:
+
+```golang
+func (b *Basket) AddItem( price float )
+```
+
+To using a Money object with a currency built in to it:
+
+```golang
+func (b *Basket) AddItem( amount Money )
+```
+
+We could:
+
+- duplicate tests so that every test calling AddItem(float) now also has a test calling AddItem(Money)
+- Add new code to make the AddItem(Money) tests pass
+- Refactor the old 'price' code to delegate to the new (Money) methods
+- Remove the old price implementation
+
+An example of this ckind of refactor would look like this:
+
+```golang
+func (b *Basket) AddItem( price float ) {
+    amount := Money{price: price, currency:"GBP"}
+    b.AddItem(amount)
+}
+```
+
+You can see that we have converted the price float into a Money object, and have added a default currency.
+
+Over time, we can remove all the tests relating to the old 'float price' design. We can inline out the various method calls to call the AddItem(Money) API instead.
+
+This gives us an iterative, safe approach to migrating the API to our code.
+
+## Next: FIRST tests - the secret to usable tests
+
+Let's take a look next at writing usable tests, following the FIRST structure
+[Next >>](../chapter07/chapter07.md)
