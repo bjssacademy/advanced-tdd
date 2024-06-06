@@ -87,9 +87,35 @@ Testing one thing _can_ use a custom assert to check several related results. A 
 
 ## 10 It's not possible to write a test
 
-"Dude TDD sucks because we can;t even write tests for this code"
+"Dude TDD sucks because we can't even write tests for this code"
 
 - Reason: Excess coupling in the component design
 - Symptom: Tests become huge, spinning up and configuring the entire system
 - Solution: Refactor to decouple the system
 - Consider: applying ideas from the book _Working with Legacy Code_ by Michael Feathers
+
+## BONUS 1: Red - Green - Excuses!
+
+Another common productivity killer: following Red - Green - Excuses.
+
+We proceed as normal, writing a failing test. We make it pass with any old quick and dirty code. Maybe pasted in off GPT, Copilot, Stack Overflow, an old Christmas Cracker joke. Whatever.
+
+We then ignore the refactor step. This is usually for one of two reasons:
+
+- "I only just wrote it so it is already beyond improvement!"
+- "There's no time and the DM won't let me refactor now"
+
+Ironically, we end up at option 2 because of following option 1 for so long.
+
+## BONUS 2: Accidentally wiping production
+
+_Are you even a developer if your tests haven't wiped production?_
+
+We have a test which does not follow FIRST principles.
+
+- It tests against the production database
+- It adds test data in the Arrange step
+- It deletes test data after the Assert step
+- We get something wrong in the delete
+
+Oops. It was nice serving all those ex-customers. Maybe nobody will notice?
