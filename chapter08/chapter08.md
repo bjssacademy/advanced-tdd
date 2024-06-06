@@ -424,3 +424,8 @@ This chapter is already too long, yet it barely scratches the surface of softwar
 - [BJSS Academy guide to Clean Code](https://github.com/bjssacademy/fundamentals-clean-code/tree/main)
 - [A philosophy of software design, John Ousterhout](https://www.amazon.co.uk/Philosophy-Software-Design-John-Ousterhout/dp/1732102201)
 - [Clean Architecture, Robert Martin](https://learning.oreilly.com/library/view/clean-architecture-a/9780134494272/)
+- [Test-Driven Development in Java, Alan Mellor](https://www.oreilly.com/library/view/test-driven-development-with/9781803236230)
+
+## Next: Difficult Dependencies
+
+How to design around [difficult-to-test-dependencies](/chapter09/chapter09.md)
