@@ -57,7 +57,7 @@ Our initial implementation can simply return the value 495 from `total()`. That 
 
 ### Avoid weird stuff to start with
 
-By _weird stuff_, we mean error cases, boundary conditions and any other complex rules.
+By _weird stuff_, I mean error cases, boundary conditions and any other complex rules.
 
 All these things need developing, of course. Just not yet. If we _start_ there, we tend to bend our design out of shape. The code no longer succinctly describes the expected normal behaviour. Instead, it reads out as being mainly a list of stuff that can go wrong.
 
