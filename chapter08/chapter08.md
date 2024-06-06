@@ -428,4 +428,4 @@ This chapter is already too long, yet it barely scratches the surface of softwar
 
 ## Next: Difficult Dependencies
 
-How to design around [difficult-to-test-dependencies](/chapter09/chapter09.md)
+How to design and test around [Difficult Dependencies >>](/chapter09/chapter09.md)
