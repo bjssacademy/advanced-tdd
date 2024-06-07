@@ -67,6 +67,10 @@ Testing through user interfaces can be slow. We need to simulate key presses, cl
 Any code that directly access the system clock to perform time-sensitive actions is hard to test. We would have to change the system time in the test.
 This is often impractical. It may cause other running applications to fail, or data to be stored incorrectly.
 
+#### Random number generators
+
+Simulations, games and statistical applications often use sources of random numbers. Code that relies on these sources is difficult to test. Given a random input, we can't predict the output. That means we can't wrote the assert section of our test.
+
 ## Managing dependencies by design
 
 The problem here is direct coupling to a system we cannot easily control or inspect.
