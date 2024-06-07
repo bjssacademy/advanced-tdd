@@ -10,7 +10,7 @@
 
 #### System time
 
-## Designing for test
+## Managing dependencies by design
 
 ### Dependency Inversion - Decoupling Dependencies
 
