@@ -69,7 +69,7 @@ This is often impractical. It may cause other running applications to fail, or d
 
 #### Random number generators
 
-Simulations, games and statistical applications often use sources of random numbers. Code that relies on these sources is difficult to test. Given a random input, we can't predict the output. That means we can't wrote the assert section of our test.
+Simulations, games and statistical applications often use sources of random numbers. Code that relies on these sources is difficult to test. Given a random input, we can't predict the output. That means we can't write the assert section of our test.
 
 ## Managing dependencies by design
 
