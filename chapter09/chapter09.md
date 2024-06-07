@@ -94,6 +94,81 @@ _How can we design our code to swap out a difficult dependency?_
 
 ### Dependency Inversion - Decoupling Dependencies
 
+Fortunately for us, the answer comes from standard software design: Dependency Inversion.
+
+The reason our `loadUserProfile` function was hard to test is because of the line
+
+```golang
+result := queryDatabase(id)
+```
+
+This line causes a direct coupling to the query database function. Assume here that inside this function, we connect to a real SQL database and query it.
+
+_We need to break this direct connection._
+
+Instead of directly calling `queryDatabase()`, we need that code to indirectly call it. It needs to call _something else_ that will allow us to swap out the actual call made.
+
+We can do this in one of two ways, either using Object Oriented techniques or Functional Programming techniques.
+
+#### Object Oriented Dependency Inversion
+
+TODO TODO TODO
+
+#### Functional Dependency Inversion
+
+This approach uses function currying and closures. It's simpler to do than to describe.
+
+- Close over a function reference
+- Our code calls whatever function reference was supplied
+- At run time, create this closure with the dependency we want to use
+
+```golang
+package main
+
+import (
+	"fmt"
+)
+
+type UserProfile struct {
+	id            int
+	name          string
+	favouriteFood string
+}
+
+func createFetchProfileFunction(queryDatabase func(string, int) []string) func(int) UserProfile {
+	return func(id int) UserProfile {
+		query := "SELECT name, age, favouriteFood FROM Profiles WHERE id = ?"
+
+		results := queryDatabase(query, id)
+
+		return UserProfile{
+			id:            id,
+			name:          results[0],
+			favouriteFood: results[1],
+		}
+	}
+}
+
+func fakeQueryDatabase(query string, param int) []string {
+	return []string{"Alan", "curry"}
+}
+
+func main() {
+	fetchUserProfile := createFetchProfileFunction(fakeQueryDatabase)
+
+	profile := fetchUserProfile(3)
+	fmt.Println(profile)
+}
+```
+
+We first call `createFetchProfileFunction` to create our fetchUserProfile function. We have passed in our `fakeQueryDatabase` function in this case. That gets bound to the `queryDatabase` parameter. We return a function from this function - basic function currying. The returned function _closes over_ the queryDatabase parameter. Whenever we call this newly minted returned function, it will use whatever value was closed over in queryDatabase.
+
+We can change which actual function gets called by the line reading `results := queryDatabase(query, id)`.
+
+In the test example above, this means we will call the `fakeQueryDatabase` function. This isn't a database, of course. It returns pre-canned data.
+
+You can see this code run on [this playground](https://goplay.tools/snippet/NLH6e1qCyvM)
+
 ### Hexagonal architecture
 
 Wikipedia has a good summary of [Hexagonal Architecture](<https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)>)
