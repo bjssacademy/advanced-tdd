@@ -75,12 +75,12 @@ A key insight is that _we do not even care_ about that system. We are not testin
 
 This insight hints at a solution:
 
-- We want to test only the logic of our code
-- This logic would not be affected by working with an alternative external system
+- Test only the logic of our code
+- Use a less-difficult dependency
 
-What if we swapped our database with something under out full control that _pretended_ to be a database?
+What if we swapped our database with something under our full control? Something that _pretended_ to be a database, but had none of the issues of the real thing?
 
-How could we design our code to swap out a dependency?
+How could we design our code to swap out a difficult dependency?
 
 ### Dependency Inversion - Decoupling Dependencies
 
