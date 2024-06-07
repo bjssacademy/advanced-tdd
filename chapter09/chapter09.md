@@ -69,7 +69,7 @@ This is often impractical. It may cause other running applications to fail, or d
 
 #### Random number generators
 
-Simulations, games and statistical applications often use sources of random numbers. Code that relies on these sources is difficult to test. Given a random input, we can't predict the output. That means we can't write the assert section of our test.
+Simulations, games and statistical applications often use sources of random numbers. Code that relies on these sources is difficult to test. Given a random input, we can't predict the output. That means we can't write the assert section of our test. Oh dear.
 
 ## Managing dependencies by design
 
@@ -80,11 +80,17 @@ A key insight is that _we do not even care_ about that system. We are not testin
 This insight hints at a solution:
 
 - Test only the logic of our code
-- Use a less-difficult dependency
+- Use a less-difficult dependency to replace our difficult one
 
 What if we swapped our database with something under our full control? Something that _pretended_ to be a database, but had none of the issues of the real thing?
 
-How could we design our code to swap out a difficult dependency?
+We can imagine replacing the database with something that always returned some pre-canned data for our User Profile code. Or a replacement fake random number generator, that always returned the number 4.
+
+By doing this, our tests are simple. We avoid dealing with all the difficulties of our original dependency. No connections. No logins. No randomness. We can easily write a FIRST test. We can easily write an assert, now we can be certain of how our new dependency behaves.
+
+It leaves only one question.
+
+_How can we design our code to swap out a difficult dependency?_
 
 ### Dependency Inversion - Decoupling Dependencies
 
