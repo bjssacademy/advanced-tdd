@@ -293,4 +293,4 @@ For more details about how TDD becomes more effective with hexagonal architectur
 
 ## Next: Test Doubles
 
-How to use these design ideas with [Test Doubles >>](chapter9-doubles.md)
+How to use these design ideas with [Test Doubles >>](/chapter09/chapter9-doubles.md)
