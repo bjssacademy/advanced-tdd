@@ -209,7 +209,7 @@ We can change which actual function gets called by the line reading `results := 
 
 In the test example above, this means we will call the `fakeQueryDatabase` function. This isn't a database, of course. It returns pre-canned data.
 
-You can see this code run on [this playground](https://goplay.tools/snippet/NLH6e1qCyvM)
+You can see this code run on [this playground](https://goplay.tools/snippet/OzAa74pfI67)
 
 ### Hexagonal architecture
 
