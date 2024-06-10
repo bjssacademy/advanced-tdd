@@ -154,7 +154,67 @@ Let's see what the code for that looks like.
 
 #### Object Oriented Dependency Inversion
 
-TODO TODO TODO
+```golang
+package main
+
+import (
+	"fmt"
+)
+
+type UserProfile struct {
+	id            int
+	name          string
+	favouriteFood string
+}
+
+// Low level interface that represents database access
+// This is a very thin abstraction. An improvement is to use the Repository Pattern
+type DatabaseQuery interface {
+	queryDatabase(query string, id int) []string
+}
+
+// Our logic code is now an object with the method fetchUserProfile
+type UserProfiles struct {
+	db DatabaseQuery
+}
+
+// The logic that processes results from whichever database implementation we choose
+func (u UserProfiles) fetchUserProfile(id int) UserProfile {
+	query := "SELECT name, favouriteFood FROM Profiles WHERE id = ?"
+
+	results := u.db.queryDatabase(query, id)
+
+	return UserProfile{
+		id:            id,
+		name:          results[0],
+		favouriteFood: results[1],
+	}
+}
+
+// Stub object - pretends to be a database
+type FakeDatabase struct {
+}
+
+// Stub database must implement the queryDatabase method defined in
+// the DatabaseQuery interface
+func (f FakeDatabase) queryDatabase(query string, param int) []string {
+	return []string{"Alan", "curry"}
+}
+
+func main() {
+	// Create stub database object
+	fakeDatabase := FakeDatabase{}
+
+	// Dependency Inject the stub into UserProfiles consumer code
+	profiles := UserProfiles{db: fakeDatabase}
+
+	// Use the UserProfiles object to fetch a profile
+	profile := profiles.fetchUserProfile(3)
+	fmt.Println(profile)
+}
+```
+
+See this version of code run in [this playground](https://goplay.tools/snippet/FU3_VrYxFhn)
 
 #### Functional Dependency Inversion
 
