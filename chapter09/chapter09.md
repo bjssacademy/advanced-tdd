@@ -1,4 +1,4 @@
-# Difficult Dependencies - Designing with Test Doubles
+# Difficult Dependencies and Dependency Inversion
 
 As we grow our system using TDD, we will run into a major problem.
 
@@ -101,7 +101,7 @@ _How can we design our code to swap out a difficult dependency?_
 
 ### Dependency Inversion - Decoupling Dependencies
 
-Fortunately for us, the answer comes from standard software design: Dependency Inversion.
+Fortunately for us, the answer comes from standard software design: **Dependency Inversion**.
 
 The reason our `loadUserProfile` function was hard to test is because of the line
 
