@@ -139,6 +139,11 @@ func createFetchProfileFunction(queryDatabase func(string, int) []string) func(i
 	return func(id int) UserProfile {
 		query := "SELECT name, age, favouriteFood FROM Profiles WHERE id = ?"
 
+        // calls whatever function we passed in ... we don;t know, here, what exactly gets called
+		// This is the Dependency Inversion at work
+		// This code does not depend on the details of which exact function is called
+		// It depends on the abstraction - the fact that some function will get called
+		// with the parameters listed, and it will return a slice of results
 		results := queryDatabase(query, id)
 
 		return UserProfile{
@@ -149,11 +154,15 @@ func createFetchProfileFunction(queryDatabase func(string, int) []string) func(i
 	}
 }
 
+// An example of a 'stub' - a dummy version of our database (see later)
 func fakeQueryDatabase(query string, param int) []string {
 	return []string{"Alan", "curry"}
 }
 
 func main() {
+	// Dependency Injection: We inject our concrete dependency here
+	// We pass in the stub function in this code
+	// For production code, we would pass in a function that accessed the database for real
 	fetchUserProfile := createFetchProfileFunction(fakeQueryDatabase)
 
 	profile := fetchUserProfile(3)
