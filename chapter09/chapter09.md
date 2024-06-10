@@ -170,7 +170,7 @@ type UserProfile struct {
 
 func createFetchProfileFunction(queryDatabase func(string, int) []string) func(int) UserProfile {
 	return func(id int) UserProfile {
-		query := "SELECT name, age, favouriteFood FROM Profiles WHERE id = ?"
+		query := "SELECT name, favouriteFood FROM Profiles WHERE id = ?"
 
         // calls whatever function we passed in ... we don;t know, here, what exactly gets called
 		// This is the Dependency Inversion at work
