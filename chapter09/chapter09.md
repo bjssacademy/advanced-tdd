@@ -103,9 +103,13 @@ result := queryDatabase(id)
 
 This line causes a direct coupling to the query database function. Assume here that inside this function, we connect to a real SQL database and query it.
 
+![direct dependency](images/direct-dependency.png)
+
 _We need to break this direct connection._
 
 Instead of directly calling `queryDatabase()`, we need that code to indirectly call it. It needs to call _something else_ that will allow us to swap out the actual call made.
+
+![Inverted Dependency](images/inverted-dependency.png)
 
 We can do this in one of two ways, either using Object Oriented techniques or Functional Programming techniques.
 
