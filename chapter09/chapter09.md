@@ -217,7 +217,7 @@ TODO TODO
 
 Wikipedia has a good summary of [Hexagonal Architecture](<https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)>)
 
-For more details about how TDD becomes more effective with heagonal architecture, see [this book](https://www.oreilly.com/library/view/test-driven-development-with/9781803236230).
+For more details about how TDD becomes more effective with hexagonal architecture, see [this book](https://www.oreilly.com/library/view/test-driven-development-with/9781803236230).
 
 ## Working with Test Doubles
 
