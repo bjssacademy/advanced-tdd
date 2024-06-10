@@ -8,15 +8,23 @@ External systems like payment processors form difficult dependencies to test. Ho
 
 ## What are difficult dependencies?
 
+Here's a common testing nightmare: code that talks to the production database and a third-party payment service:
+
+![Difficult Dependency](images/example-difficult-dependency.png)
+
+The code we want to test directly accesses the live customer database and the third-party payment service. Anything our test does will affect both of those! It's only a test - we don;t want to add a test customer into live. We _really_ don't want to pay on each test run!
+
+### It's a problem of control
+
 Technically, a 'difficult dependency' is a connection to a system that we don't have full control over.
 
 Our code depends on this system to do its work. Our test will have to setup this dependency and quite likely assert against some observable change in its behaviour.
 
-Both the setup, done in the arrange step, and the verification in the assert steo can be problematic.
+Both the setup, done in the arrange step, and the verification in the assert step can be problematic.
 
 Let's look at some common cases to see why.
 
-#### Databases
+### Databases
 
 The most common problem is testing code that accesses a database.
 
@@ -57,16 +65,16 @@ All this causes several difficulties:
 
 This is how we get slow and flaky tests. This is a violation of FIRST test principles.
 
-#### User interfaces
+### User interfaces
 
 Testing through user interfaces can be slow. We need to simulate key presses, clicks and navigation. We need to scrape screen content to check the results.
 
-#### System time
+### System time
 
 Any code that directly access the system clock to perform time-sensitive actions is hard to test. We would have to change the system time in the test.
 This is often impractical. It may cause other running applications to fail, or data to be stored incorrectly.
 
-#### Random number generators
+### Random number generators
 
 Simulations, games and statistical applications often use sources of random numbers. Code that relies on these sources is difficult to test. Given a random input, we can't predict the output. That means we can't write the assert section of our test. Oh dear.
 
