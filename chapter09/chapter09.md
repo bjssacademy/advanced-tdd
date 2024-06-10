@@ -110,6 +110,37 @@ Instead of directly calling `queryDatabase()`, we need that code to indirectly c
 
 We can do this in one of two ways, either using Object Oriented techniques or Functional Programming techniques.
 
+In both cases we use two techniques:
+
+- Dependency Inversion
+- Dependency Injection
+
+These are two sides of the same coin. Let's describe them briefly.
+
+#### Dependency Inversion
+
+In our example, `loadUserProfile` directly depends on a function `queryDatabase` to do its job.
+
+> Generally, a component A depends on B if A has any knowledge of the specifics of B.
+
+Dependency Inversion means we break that.
+
+We introduce an indirection of some kind - an interface, or an agreement. Let's call this C.
+
+If we make A refer to C instead of B, we have broken the cycle. We make C something like an interface, or a passed-in function. That way, we can wire-up the code so that anything that conforms to C can be used. We arrange for B to conform to C, so we can swap that in for the real code. But we can also swap in anything else that conforms to C.
+
+An example in Go is the [`Reader`](https://go.dev/tour/methods/21) interface. Our code (component A) can call the `Read` method on this interface (C above). We say our code _depends on_ the Reader interface (or A depends on C in our generalised world).
+
+Anything can be used that implements the `Read` method. We simply wire-up whatever implementation of the `Reader` interface we want.
+
+#### Dependency injection
+
+This idea of wiring up the correct dependency is called, predictably enough, Dependency Injection. We _inject_ a dependency.
+
+We can do this in either an Object Oriented way (using interfaces), or a Functional way (using passed-in functions).
+
+Let's see what the code for that looks like.
+
 #### Object Oriented Dependency Inversion
 
 TODO TODO TODO
@@ -121,6 +152,8 @@ This approach uses function currying and closures. It's simpler to do than to de
 - Close over a function reference
 - Our code calls whatever function reference was supplied
 - At run time, create this closure with the dependency we want to use
+
+We still use Dependency Inversion and Dependency Injection. They just use different technqiues at the syntax level.
 
 ```golang
 package main
