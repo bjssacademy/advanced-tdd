@@ -294,11 +294,17 @@ You can see this code run on [this playground](https://goplay.tools/snippet/OzAa
 
 ### Hexagonal architecture
 
-TODO TODO
+If we invert the dependencies on _every_ external system, we end up with an architectural pattern known as _Hexagonal Architecture_
+
+![Hexagonal Architecture overview](images/hexarch.png)
+
+This greatly simplifies testing our application logic. It enables us to use _Test Doubles_ for every external system. The next chapter will describe Test Doubles in detail.
 
 Wikipedia has a good summary of [Hexagonal Architecture](<https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)>)
 
-For more details about how TDD becomes more effective with hexagonal architecture, see [this book](https://www.oreilly.com/library/view/test-driven-development-with/9781803236230).
+The original inventor of Hexagonal Architecture has a 2024 book out about it, [here](https://www.amazon.co.uk/Hexagonal-Architecture-Explained-Alistair-Cockburn/dp/173751978X)
+
+For more details about how TDD becomes more effective with hexagonal architecture, see [this book](https://www.oreilly.com/library/view/test-driven-development-with/9781803236230) by the author of the guide you are reading.
 
 ## Next: Test Doubles
 
