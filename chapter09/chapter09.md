@@ -128,7 +128,7 @@ In both cases we use two techniques:
 
 These are two sides of the same coin. Let's describe them briefly.
 
-#### Dependency Inversion
+#### Dependency Inversion Pricniple (DIP)
 
 In our example, `loadUserProfile` directly depends on a function `queryDatabase` to do its job.
 
@@ -144,7 +144,7 @@ An example in Go is the [`Reader`](https://go.dev/tour/methods/21) interface. Ou
 
 Anything can be used that implements the `Read` method. We simply wire-up whatever implementation of the `Reader` interface we want.
 
-#### Dependency injection
+#### Dependency injection (DI)
 
 This idea of wiring up the correct dependency is called, predictably enough, Dependency Injection. We _inject_ a dependency.
 
@@ -153,6 +153,14 @@ We can do this in either an Object Oriented way (using interfaces), or a Functio
 In either case, we have a piece of logic `fetchUserProfile` which will use Dependency Inversion to access data.
 
 #### Object Oriented Dependency Inversion
+
+In this OO version, our component is an object `UserProfiles`. Method `fetchUserProfile(id)` will call out to our chosed data source to get facts about a user. It will use those to create a `UserProfile` struct.
+
+We apply Dependency Inversion by introducing the interface `DatabaseQuery`. Our `UserProfiles` object will keep a reference to some implementation of this interface. Our logic will call that, instead of directly calling the real database.
+
+In the code below, we provide a _stub_ (ie pretend) database object and use that. Stubs are explained in detail later.
+
+We Use Dependency Injection () to inject our stub into the `UserProfiles` object.
 
 ```golang
 package main
@@ -219,11 +227,12 @@ See this version of code run in [this playground](https://goplay.tools/snippet/F
 
 #### Functional Dependency Inversion
 
-This approach uses function currying and closures. It's simpler to do than to describe.
+This approach uses function currying and closures.
 
-- Close over a function reference
-- Our code calls whatever function reference was supplied
-- At run time, create this closure with the dependency we want to use
+- function `fetchUserProfile(id) will close over a supplied refernce to a `queryDatabase` function
+- Our code calls the supplied function reference to get data
+- Our logic uses this returned data, unaware of exactly where it came from
+- At run time, we create this closure with the dependency we want to use
 
 We still use Dependency Inversion and Dependency Injection. They just use different technqiues at the syntax level.
 
@@ -293,4 +302,4 @@ For more details about how TDD becomes more effective with hexagonal architectur
 
 ## Next: Test Doubles
 
-How to use these design ideas with [Test Doubles >>](/chapter09/chapter09-doubles.md)
+Let's apply these designs to test dificult dependencies: [Test Doubles >>](/chapter09/chapter09-doubles.md)
