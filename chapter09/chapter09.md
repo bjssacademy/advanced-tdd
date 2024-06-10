@@ -24,15 +24,14 @@ Here's a function that will read a database table called `Profiles` and return a
 
 ```golang
 func loadUserProfile(id int) UserProfile {
-    query := "SELECT name, age, favouriteFood FROM Profiles WHERE id = ?"
+    query := "SELECT name, favouriteFood FROM Profiles WHERE id = ?"
 
     results := queryDatabase(query, id)
 
     return UserProfile{
         id: id,
         name: results[0],
-        age: results[1],
-        favouriteFood: results[2]
+        favouriteFood: results[1]
         }
 }
 ```
