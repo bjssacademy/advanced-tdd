@@ -150,8 +150,6 @@ This idea of wiring up the correct dependency is called, predictably enough, Dep
 
 We can do this in either an Object Oriented way (using interfaces), or a Functional way (using passed-in functions).
 
-In either case, we have a piece of logic `fetchUserProfile` which will use Dependency Inversion to access data.
-
 #### Object Oriented Dependency Inversion
 
 ```golang
@@ -291,6 +289,12 @@ Wikipedia has a good summary of [Hexagonal Architecture](<https://en.wikipedia.o
 
 For more details about how TDD becomes more effective with hexagonal architecture, see [this book](https://www.oreilly.com/library/view/test-driven-development-with/9781803236230).
 
-## Next: Test Doubles
+## Working with Test Doubles
 
-How to use these design ideas with [Test Doubles >>](chapter9-doubles.md)
+### Stubs - Testing sources
+
+### Mocks - Testing sinks
+
+## Next: TDD and agility
+
+[How TDD assists true agility >>](/chapter10/chapter10.md)
