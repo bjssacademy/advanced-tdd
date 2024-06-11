@@ -202,6 +202,18 @@ Let's illustrate that with code
 ### Example: Mocking a payment service
 
 TODO TODO TODO
+TODO TODO TODO
+TODO TODO TODO
+TODO TODO TODO
+TODO TODO TODO
+play ground code walkthrough here
+TODO TODO TODO
+TODO TODO TODO
+TODO TODO TODO
+TODO TODO TODO
+TODO TODO TODO
+TODO TODO TODO
+TODO TODO TODO
 
 ## Other kinds of doubles
 
