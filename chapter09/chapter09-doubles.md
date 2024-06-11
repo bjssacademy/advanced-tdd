@@ -51,7 +51,7 @@ Because the input to our code is always the same, we can determine the expected 
 
 This allows us to write the Assert section of our test with confidence.
 
-[This playground](https://goplay.tools/snippet/zFI9e-f9MQ4) shows an example of a stub in use.
+[This playground](https://goplay.tools/snippet/7ljrYRCZ5EW) shows an example of a stub in use. In this code, the stubbed-out data is a favourite food of "curry". This allows us to write the assertion.
 
 ### Mocks - Testing sinks
 
