@@ -127,7 +127,7 @@ func (s StubClock) Now() time.Time {
 }
 ```
 
-We provide a convenience construction function. This allows our Arrange step to set up any simul;ated time it likes. We pass this stub clock in to our production code function, in the Act step.
+We provide a convenience construction function. This allows our Arrange step to set up any simulated time it likes. The Act step will pass this stub clock in to our production code function.
 
 Here is our first test:
 
@@ -167,9 +167,9 @@ func TestPMAfterNoon(t *testing.T) {
 }
 ```
 
-Stubs enable us to simulate difficult-to-trigger conditions. The occurence of a specific time is a good example of that.
+Stubs enable us to simulate difficult-to-trigger conditions. The occurrence of a specific time is a good example of that.
 
-You can see this code in [this playground](https://goplay.tools/snippet/LBV0cz0d4Ne)
+You can run this code in [this playground](https://goplay.tools/snippet/LBV0cz0d4Ne)
 
 ## Example: Mocking a payment service
 
