@@ -18,21 +18,46 @@ When an actor is required to perform stunt work, usually a _stunt double_ is sub
 
 In software, a Test Double is a dummy component that simulates the real component for testing.
 
+## Advantages and uses of Test Doubles
+
+Test doubles have several advantages, when used to replace difficult dependencies:
+
+- Tests are Fast. No waiting around for connections, networks and more
+- Tests are Isolated. We don't track long-term state in our doubles. Compare that to a 'development test database'
+- Tests are Repeatable. We fully control the doubles from inside our test, guaranteeing repeatable action
+- We can simulate hard-to-obtain events. Examples: network failure, corrupt data, power failure
+- We avoid adding test data into production systems during testing
+- We avoid using third-party systems, possibly incurring costs
+
 ## Kinds of Test Doubles
 
 There are several kinds of test double that we can use. Each one has a different purpose.
 
-the two most useful are known as the _stub_ and the _mock_.
+The two most useful are known as the _stub_ and the _mock_.
 
 ### Stubs - Testing sources
+
+_Stubs supply data_
 
 A stub object simulates a source of something. A stub database simulates the data we can fetch from a real database.
 
 A stub always returns well-known, pre-canned data.
 
+![Stub arrangement](images/stubbing-datasource.png)
+
 The advantage is that our test can rely on this data. It is guaranteed to always be the same.
 
+Because the input to our code is always the same, we can determine the expected outcome.
+
+This allows us to write the Assert section of our test with confidence.
+
+[This playground](https://goplay.tools/snippet/zFI9e-f9MQ4) shows an example of a stub in use.
+
 ### Mocks - Testing sinks
+
+_Mocks record interactions_
+
+TODO TODO
 
 ### Other kinds of doubles
 
