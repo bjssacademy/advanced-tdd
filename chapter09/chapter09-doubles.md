@@ -41,7 +41,7 @@ _Stubs supply pre-canned data_
 
 A stub object simulates a source of something. The stub object exactly conforms to the programming interface of some 'difficult dependency' and simulates it for the test. A stub database, for example, simulates the data we can fetch from a real database.
 
-By using [Dependency Inversion/Injection](chapter09.md), then we are free to swap the real object with the stub for use within our code. The tests wire up the stub. Production code wires up the real object.
+By using [Dependency Inversion/Injection](https://github.com/bjssacademy/advanced-tdd/blob/main/chapter09/chapter09.md#dependency-inversion---decoupling-dependencies), then we are free to swap the real object with the stub for use within our code. The tests wire up the stub. Production code wires up the real object.
 
 The major advantage here is that our production code under test works the same way for both cases. There is no conditional behaviour inside it. No "if test mode is active" type stuff. Once the test passes against the stub, it will pass against the real object.
 
@@ -185,7 +185,7 @@ To capture interactions and commands, we use a _Mock_ object.
 
 In the preceding diagram, our test executes some production code that will trigger a payment. In production, this might be to a bank, or a service like Stripe. Our test does not want to run a real payment. It also wants to assert that the payment provider _would have been_ called in production.
 
-Once again, we create an abstraction of the payment processor. We then apply [Dependency Inversion/Injection](chapter09.md) to allow different implementations to be swapped in. The production code will communicate with the real provider. The test will use a Mock provider.
+Once again, we create an abstraction of the payment processor. We then apply [Dependency Inversion/Injection](https://github.com/bjssacademy/advanced-tdd/blob/main/chapter09/chapter09.md#dependency-inversion---decoupling-dependencies) to allow different implementations to be swapped in. The production code will communicate with the real provider. The test will use a Mock provider.
 
 The Mock provider will capture interactions made with it by the component under test.
 
