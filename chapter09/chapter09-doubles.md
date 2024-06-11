@@ -41,7 +41,7 @@ _Stubs supply data_
 
 A stub object simulates a source of something. The stub object exactly conforms to the programming interface of some 'difficult dependency' and simulates it for the test. A stub database, for example, simulates the data we can fetch from a real database.
 
-By using Dependency Inversion (as per the previous chapter), then we are free to swap the real object and a stub for use within our code. The tests wire up the stub. Production code wires up the real object.
+By using Dependency Inversion (as per the previous chapter), then we are free to swap the real object with the stub for use within our code. The tests wire up the stub. Production code wires up the real object.
 
 The major advantage here is that our production code under test works the same way for both cases. There is no conditional behaviour inside it. No "if test mode is active" type stuff. Once the test passes against the stub, it will pass against the real object.
 
