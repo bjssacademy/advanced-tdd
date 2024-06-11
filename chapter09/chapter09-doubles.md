@@ -166,9 +166,26 @@ You can run this code in [this playground](https://goplay.tools/snippet/LBV0cz0d
 
 _Mocks record interactions_
 
-TODO TODO
+Stubs pretend to be a _source_ of something. They are good at simulating an _input_ to a process.
 
-### Other kinds of doubles
+But how do we simulate an _output_ device?
+
+Examples of output devices include:
+
+- Payment Processor that accepts credit card payments
+- Email sending service that emails customers
+- User interface output
+- Controlled hardware - perhaps actuators in a robot
+
+Whereas a stub provides input to a process, what we need here is some way of capturing the output from a process. Was the payment provider called with the correct details? Was the robot arm commanded to move six degrees left?
+
+To capture interactions and commands, we use a _Mock_ object.
+
+![Mocking a payment processor](images/mocking-payments.png)
+
+### Example: Mocking a payment service
+
+## Other kinds of doubles
 
 Other kinds of test double exist
 
@@ -176,8 +193,6 @@ Other kinds of test double exist
 - **Spy** wraps a real component and can record interactions/modify data
 
 Fakes can be useful. Beware that once they get complex, the Fake needs developing with TDD _itself_ to guarantee its simulated behaviours match those intended.
-
-## Example: Mocking a payment service
 
 ## Caveats with test doubles
 
