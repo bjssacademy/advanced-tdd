@@ -224,6 +224,8 @@ Other kinds of test double exist
 
 Fakes can be useful. Beware that once they get complex, the Fake needs developing with TDD _itself_ to guarantee its simulated behaviours match those intended.
 
+Spies are basically Mocks, but with a pass-through to the target service. As a result, I find them less useful. They seem to me to paper over a failure in abstraction. But if you find yourself in that position with a deadline, it's nice to know they are there.
+
 ## Caveats with test doubles
 
 There are some gotchas to watch out for when using test doubles
