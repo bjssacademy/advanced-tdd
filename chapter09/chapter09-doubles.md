@@ -37,7 +37,7 @@ The two most useful are known as the _stub_ and the _mock_.
 
 ### Stubs - Testing sources
 
-_Stubs supply data_
+_Stubs supply pre-canned data_
 
 A stub object simulates a source of something. The stub object exactly conforms to the programming interface of some 'difficult dependency' and simulates it for the test. A stub database, for example, simulates the data we can fetch from a real database.
 
