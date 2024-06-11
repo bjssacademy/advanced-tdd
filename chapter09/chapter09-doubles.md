@@ -59,22 +59,7 @@ This allows us to write the Assert section of our test with confidence.
 
 [This playground](https://goplay.tools/snippet/7ljrYRCZ5EW) shows an example of a stub in use. In this code, the stubbed-out data is a favourite food of "curry". This allows us to write the assertion.
 
-### Mocks - Testing sinks
-
-_Mocks record interactions_
-
-TODO TODO
-
-### Other kinds of doubles
-
-Other kinds of test double exist
-
-- **Fake** is an advanced stub that simulates behaviour of the real component. An example would be an in-memory database that stores data and executes queries properly against that data.
-- **Spy** wraps a real component and can record interactions/modify data
-
-Fakes can be useful. Beware that once they get complex, the Fake needs developing with TDD _itself_ to guarantee its simulated behaviours match those intended.
-
-## Example: Stubbing the System Clock
+### Example: Stubbing the System Clock
 
 A good example of stubbing involves time-sensitive actions.
 
@@ -176,6 +161,21 @@ func TestPMAfterNoon(t *testing.T) {
 Stubs enable us to simulate difficult-to-trigger conditions. The occurrence of a specific time is a good example of that.
 
 You can run this code in [this playground](https://goplay.tools/snippet/LBV0cz0d4Ne)
+
+### Mocks - Testing sinks
+
+_Mocks record interactions_
+
+TODO TODO
+
+### Other kinds of doubles
+
+Other kinds of test double exist
+
+- **Fake** is an advanced stub that simulates behaviour of the real component. An example would be an in-memory database that stores data and executes queries properly against that data.
+- **Spy** wraps a real component and can record interactions/modify data
+
+Fakes can be useful. Beware that once they get complex, the Fake needs developing with TDD _itself_ to guarantee its simulated behaviours match those intended.
 
 ## Example: Mocking a payment service
 
