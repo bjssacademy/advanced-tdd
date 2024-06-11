@@ -70,6 +70,107 @@ Fakes can be useful. Beware that once they get complex, the Fake needs developin
 
 ## Example: Stubbing the System Clock
 
+A good example of stubbing involves time-sensitive actions.
+
+In the production code below, we want a function that will return AM or PM depending on the time of day. This will be hard to test if the function uses the actual; system time. To fix that, we use Dependency Inversion, and create an abstraction of reading the time:
+
+```golang
+type Clock interface {
+	Now() time.Time
+}
+```
+
+We can write a function which depends on this abstraction instead of the system time directly:
+
+```golang
+func amOrPm(clock Clock) string {
+	timeNow := clock.Now()
+
+	if timeNow.Hour() < 12 {
+		return "AM"
+	}
+
+	return "PM"
+}
+```
+
+The time is being taken from whatever object is being passed into the function as the `clock` parameter.
+
+In the production code, this would be a SystemClock object, defined like this:
+
+```golang
+type SystemClock struct {
+    // empty
+}
+
+func (s SystemClock) Now() time.Time {
+    return time.Now()
+}
+```
+
+For our tests, we want to replace the `SystemClock` with a `StubClock`:
+
+```golang
+// Stub clock - enables simulation of specific times
+type StubClock struct {
+	time time.Time
+}
+
+// Convenience Construction function
+func NewStubClock(simulatedTime time.Time) StubClock {
+	return StubClock{time: simulatedTime}
+}
+
+// Implements interface to return stubbed time setting
+func (s StubClock) Now() time.Time {
+	return s.time
+}
+```
+
+We provide a convenience construction function. This allows our Arrange step to set up any simul;ated time it likes. We pass this stub clock in to our production code function, in the Act step.
+
+Here is our first test:
+
+```golang
+func TestAMBeforeNoon(t *testing.T) {
+	// Arrange
+	stubClock := NewStubClock(time.Date(2024, 06, 10, 1, 00, 00, 0, time.UTC))
+
+	// Act
+	got := amOrPm(stubClock)
+
+	// Assert
+	want := "AM"
+	if got != want {
+		t.Errorf("got: %v, want: %v", got, want)
+	}
+}
+```
+
+This runs our function with a date of 10 June 2024 and a time of 1:00 AM. Given this time, we can expect the result to be "AM".
+
+We can use a second test of the same format. We set the stubbed clocked time to be 1:00PM in the afternoon:
+
+```golang
+func TestPMAfterNoon(t *testing.T) {
+	// Arrange
+	stubClock := NewStubClock(time.Date(2024, 06, 10, 13, 00, 00, 0, time.UTC))
+
+	// Act
+	got := amOrPm(stubClock)
+
+	// Assert
+	want := "PM"
+	if got != want {
+		t.Errorf("got: %v, want: %v", got, want)
+	}
+}
+```
+
+Stubs enable us to simulate difficult-to-trigger conditions. The occurence of a specific time is a good example of that.
+
+You can see this code in [this playground](https://goplay.tools/snippet/LBV0cz0d4Ne)
+
 ## Example: Mocking a payment service
 
 ## Caveats with test doubles
