@@ -187,6 +187,10 @@ In the preceding diagram, our test executes some production code that will trigg
 
 Once again, we create an abstraction of the payment processor. We then apply [Dependency Inversion/Injection](https://github.com/bjssacademy/advanced-tdd/blob/main/chapter09/chapter09.md#dependency-inversion---decoupling-dependencies) to allow different implementations to be swapped in. The production code will communicate with the real provider. The test will use a Mock provider.
 
+> The real implementation uses an [Adapter](https://refactoring.guru/design-patterns/adapter) Design Pattern.
+>
+> We _adapt_ our abstraction to the reality of the third-party service
+
 The Mock provider will capture interactions made with it by the component under test.
 
 In this example, the code under test will call a `pay()` method, taking a single parameter of a credit card number.
@@ -196,6 +200,8 @@ The mock payment processor object simply _records_ the fact that pay() was calle
 Let's illustrate that with code
 
 ### Example: Mocking a payment service
+
+TODO TODO TODO
 
 ## Other kinds of doubles
 
