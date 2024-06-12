@@ -160,6 +160,18 @@ Stubs enable us to simulate difficult-to-trigger conditions. The occurrence of a
 
 You can run this code in [this playground](https://goplay.tools/snippet/LBV0cz0d4Ne)
 
+#### Other things we can stub
+
+It's not just time sources we can stub, of course. Any source of data - or events - can be stubbed:
+
+- **Databases**: Return stub data for queries ([example](https://goplay.tools/snippet/7ljrYRCZ5EW))
+- **Keyboard input**: Text from a keyboard or GUI can be stubbed
+- **Web Requests**: A request from a browser can be stubbed locally, avoiding HTTP calls
+- **Reference Data**: Data like tax tables can be stubbed, with values to explore our logic
+- **Events**: Events like a setTimeout() callback or onClick() can be stubbed. Call the event handler directly with stub data
+
+What else can you think of? What other sources can be stubbed?
+
 ### Mocks - Testing sinks
 
 _Mocks record interactions_
