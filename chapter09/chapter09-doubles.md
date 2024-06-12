@@ -18,7 +18,7 @@ When an actor is required to perform stunt work, usually a _stunt double_ is sub
 
 In software, a Test Double is a dummy component that simulates the real component for testing.
 
-## Advantages and uses of Test Doubles
+## Advantages of Test Doubles
 
 Test doubles have several advantages, when used to replace difficult dependencies:
 
