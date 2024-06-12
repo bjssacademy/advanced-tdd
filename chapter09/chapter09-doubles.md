@@ -483,9 +483,9 @@ FAIL
 
 You'll doubtless notice that we made a lot of boilerplate code for our mock. It seems like a routine kind of thing that ought to be automated.
 
-Go, like most languages, has libraries that will auto-generate mocks for us. One example is [GoMock](https://github.com/golang/mock).
+Go, like most languages, has libraries that will auto-generate mocks for us. One example is [Testify](https://github.com/stretchr/testify), which _also_ provides a nicer way to write assertions. Worth a look. Others are available.
 
-Used wisely, they can save a lot of time.
+Used wisely, mocking/assertion libraries can save a lot of time. They also provide a standard language with other developers, rather than our hand-rolled code.
 
 > Beware of mocking things that are better not mocked, just because a library makes it easy!
 
