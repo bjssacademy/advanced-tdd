@@ -328,9 +328,9 @@ _Mocks record output interactions with other components_
 
 ![Mocking a payment processor](images/mocking-payments.png)
 
-_Mocks_ are useful when we want to test the _output_ of our component, when it calls a method, or raises an event. It's easy enough to capture a return value of data - as we have seen before. But a regular assertion isn't enough when we wish to check that our component called a specific method somewhere else.
+Mocks are useful when we want to test the _output_ of our component, when it calls a method, or raises an event. It's easy enough to capture a return value of data - as we have seen before. But how do we check our component performed an action?
 
-In general, when the output of our component is an _action_ rather than a _data flow_, we need to use a Mock.
+When the output of our component is an _action_ rather than a _data flow_, we need to use a Mock.
 
 Mocks capture interactions by recording them. A mock for a payment service will record the different calls made to that service, and what the parameters to those calls were. A mock for an event bus will record which events were sent to it.
 
@@ -478,6 +478,16 @@ The test will also pick up programming errors, such as sending the wrong values:
 --- FAIL: TestPaymentMade (0.00s)
 FAIL
 ```
+
+### Using a Mocking framework
+
+You'll doubtless notice that we made a lot of boilerplate code for our mock. It seems like a routine kind of thing that ought to be automated.
+
+Go, like most languages, has libraries that will auto-generate mocks for us. One example is [GoMock](https://github.com/golang/mock).
+
+Used wisely, they can save a lot of time.
+
+> Beware of mocking things that are better not mocked, just because a library makes it easy!
 
 ## Other kinds of Test Doubles
 
