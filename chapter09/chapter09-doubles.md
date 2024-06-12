@@ -226,7 +226,7 @@ func TestPaymentMade(t *testing.T) {
 }
 ```
 
-We've gone for a simple function `MakePayment()` which will mae a single payment to a third-party service. We pass in how to reach that service as the first parameter. This is applying Dependency Injection.
+We've gone for a simple function `MakePayment()` which will make a single payment to a third-party service. By design, we will pass in some object representing that payment service, as the first and only parameter. This is a use of Dependency Injection.
 
 We don't have a `payments` object just yet. We need to create one.
 
