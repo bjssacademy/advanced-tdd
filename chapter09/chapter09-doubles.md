@@ -95,7 +95,7 @@ func TestAMBeforeNoon(t *testing.T) {
 }
 ```
 
-What should variable `got` be? In other words, how do we access the results of our function?
+What should variable `got` be? In other words, how do we _want to_ access the results of our function? We are the designers in TDD, remember.
 
 Our first design choice is to have a function called `amOrPm()` that returns the string "AM" or "PM".
 
