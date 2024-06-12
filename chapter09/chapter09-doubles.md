@@ -35,9 +35,11 @@ There are several kinds of test double that we can use. Each one has a different
 
 The two most useful are known as the _stub_ and the _mock_.
 
-## Stubs - Testing sources
+## Stubs - Testing sources of data and events
 
 _Stubs supply pre-canned data_
+
+We can think of our code under test as a process with inputs and outputs. These can be data that enters or leaves the process. They can be events eithe rinitiating the process or being activated by the process. SOmetimes, they are both: an example would be an HTTP POST request. It is both an event plus a payload of data.
 
 A stub object simulates a source of something. The stub object exactly conforms to the programming interface of some 'difficult dependency' and simulates it for the test. A stub database, for example, simulates the data we can fetch from a real database.
 
@@ -49,7 +51,7 @@ The major advantage here is that our production code under test works the same w
 
 A stub always returns well-known, pre-canned data.
 
-![Stub arrangement](images/stubbing-datasourceclock.png)
+![Stub arrangement](images/stubbing-clock.png)
 
 The advantage is that our test can rely on this data. It is guaranteed to always be the same.
 
