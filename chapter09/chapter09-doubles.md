@@ -95,9 +95,11 @@ func TestAMBeforeNoon(t *testing.T) {
 }
 ```
 
-What is variable `got`? Our first design choice is to have a function called `amOrPm()` that returns the string "AM" or "PM".
+What should variable `got` be? In other words, how do we access the results of our function?
 
-To get moving, that's all it will do right now:
+Our first design choice is to have a function called `amOrPm()` that returns the string "AM" or "PM".
+
+To get moving, let's make it always return "AM":
 
 ```golang
 func TestAMBeforeNoon(t *testing.T) {
