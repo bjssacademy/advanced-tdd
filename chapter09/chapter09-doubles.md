@@ -14,9 +14,9 @@ Our tests can take advantage of this design-level thinking.
 
 The name _Test Double_ comes from the world of movies.
 
-When an actor is required to perform stunt work, usually a _stunt double_ is substituted for the real actor. They look similar. The specialist stunt performer can safely act out the hazardous action in the scene. The real actor will be unharmed - and most likely will not have the required skills to perform the stunt.
+When an actor is required to perform stunt work, usually a _stunt double_ is substituted for the real actor. They look similar. The specialist stunt performer can safely act out the hazardous action in the scene. The real actor will be unharmed. Most likely, they will not have the required skills to perform the stunt. The double does have the necessary skills.
 
-In software, a Test Double is a dummy component that simulates the real component for testing.
+In software, a Test Double is a dummy component that simulates some real component dependency. We sap in the double to assist testing code which uses this dependency.
 
 ## Advantages of Test Doubles
 
@@ -37,7 +37,7 @@ The two most useful are known as the _stub_ and the _mock_.
 
 ## Stubs - Testing sources of data and events
 
-_Stubs simulate an input_
+_Stubs simulate an input source of data or events_
 
 ![Stub arrangement](images/stubbing-clock.png)
 
@@ -61,7 +61,7 @@ Stubs always return the same data values, or trigger the same events, every time
 
 This feature of stubs allows us to work out the expected results in our Assert step. Significantly, it makes that test repeatable. The stub will always do the same thing on every test run, in every environment.
 
-### Stubbing other input sources
+### Useful kinds of stubs
 
 Anything providing an input or a trigger to a process is a candidate for stubbing in tests.
 
@@ -178,58 +178,153 @@ Stubs enable us to simulate difficult-to-trigger conditions. The occurrence of a
 
 ## Mocks - Testing sinks
 
-_Mocks record interactions_
+_Mocks record output interactions with other components_
 
 ![Mocking a payment processor](images/mocking-payments.png)
 
-Stubs pretend to be a _source_ of something. They are good at simulating an _input_ to a process.
+Stubs simulate inputs to our process. A Mock simulates an output target of our process.
 
-But how do we simulate an _output_ device?
+Our component under test will create some observable outcome. If it is a pure function, then the output will be some piece of returned data. Perhaps a created object. We can assert against those easily.
 
-Examples of output devices include:
+A more challenging case is where our component has a _behaviour_ as its output.
+
+Perhaps it calls a method on another object. Maybe it calls a function that was passed-in. Maybe it places an event on an event bus.
+
+In each case, we cannot simply assert against an output data valuse, as the code simply does not work like that.
+
+We must _capture_ the behaviour.
+
+Mocks capture interactions by recording them. A mock for a payment service will record the different calls made to that service, and what the parameters to those calls were. A mock for an event bus will record which events were sent to it.
+
+Our test can wire up the mock object to the component we are testing in the arrange step.
+
+The act step causes our component to run, as normal.
+
+The assert step is a little different; it queries the mock object to find out if any interaction happened. If so, what exactly happened?
+
+### Useful kinds of mocks
+
+Anything which is acted upon by our component is a candidate for a mock during testing:
 
 - Payment Processor that accepts credit card payments
 - Email sending service that emails customers
 - User interface output
 - Controlled hardware - perhaps actuators in a robot
 
-Whereas a stub provides input to a process, what we need here is some way of capturing the output from a process. Was the payment provider called with the correct details? Was the robot arm commanded to move six degrees left?
-
-To capture interactions and commands, we use a _Mock_ object.
-
-In the preceding diagram, our test executes some production code that will trigger a payment. In production, this might be to a bank, or a service like Stripe. Our test does not want to run a real payment. It also wants to assert that the payment provider _would have been_ called in production.
-
-Once again, we create an abstraction of the payment processor. We then apply [Dependency Inversion/Injection](https://github.com/bjssacademy/advanced-tdd/blob/main/chapter09/chapter09.md#dependency-inversion---decoupling-dependencies) to allow different implementations to be swapped in. The production code will communicate with the real provider. The test will use a Mock provider.
-
-> The real implementation uses an [Adapter](https://refactoring.guru/design-patterns/adapter) Design Pattern.
->
-> We _adapt_ our abstraction to the reality of the third-party service
-
-The Mock provider will capture interactions made with it by the component under test.
-
-In this example, the code under test will call a `pay()` method, taking a single parameter of a credit card number.
-
-The mock payment processor object simply _records_ the fact that pay() was called, and what arguments it was called with. The mock can then provide an assert() method that allows the test to confirm that `pay()` was called, and with the correct credit card number.
-
-Let's illustrate that with code
-
 ## Example: Mocking a payment service
 
-Run this code [here](https://goplay.tools/snippet/cuQEJ4VHCDu)
+Run this code [here](https://goplay.tools/snippet/AysBWYhdWS_e)
 
-TODO TODO TODO
-TODO TODO TODO
-TODO TODO TODO
-TODO TODO TODO
-TODO TODO TODO
-play ground code walkthrough here
-TODO TODO TODO
-TODO TODO TODO
-TODO TODO TODO
-TODO TODO TODO
-TODO TODO TODO
-TODO TODO TODO
-TODO TODO TODO
+In this example, we are test-driving a simple function `MakePayment`. This function will make a single payment to an external payment service. We want to test that it makes the right call.
+
+We start with an abstraction of the payment service, tailored to our need:
+
+```golang
+type Payments interface {
+	Pay(accountId string, amount string)
+}
+```
+
+Our production code would write an implementation of the `Pay()` method. It would talk to a real bank, or real payment service like Stripe.
+
+For our test, we want to avoid calls to the real service. We instead want to capture the fact that a call happened.
+
+We can create a Mock to do this:
+
+```golang
+type MockPayments struct {
+	wasCalled bool
+	accountId string
+	amount    string
+}
+
+func (m *MockPayments) Pay(accountId string, amount string) {
+	m.wasCalled = true
+	m.accountId = accountId
+	m.amount = amount
+}
+```
+
+This mock records if the `Pay()` method was ever called. If it was, it records the values of the parameters it was called with.
+
+We can start to write our test:
+
+```golang
+
+func TestPaymentMade(t *testing.T) {
+	// ARRANGE - create stub
+	mockPay := &MockPayments{}
+}
+```
+
+We can then TDD out our function in the act step next:
+
+```golang
+func TestPaymentMade(t *testing.T) {
+	// ARRANGE - create stub
+	mockPay := &MockPayments{}
+
+	// ACT - call our function, pass it the stub
+	MakePayment(mockPay)
+}
+```
+
+That's enough to code up the method signature with a do-nothing implementation:
+
+```golang
+func MakePayment(payments Payments) {
+    // Not implemented
+}
+```
+
+We need to specify what we want the observable behaviour of `MakePayment()` to be. We do this by writing the assert step:
+
+```golang
+func TestPaymentMade(t *testing.T) {
+	// ARRANGE - create stub
+	mockPay := &MockPayments{}
+
+	// ACT - call our function, pass it the stub
+	MakePayment(mockPay)
+
+	// ASSERT - Did we ever call the service? What parameters were used in the call?
+	payCalled := mockPay.wasPayCalledWith("Alan", "24.95 GBP")
+
+	if !payCalled {
+		t.Errorf("expected Pay to be called correctly: got %v", mockPay)
+	}
+}
+```
+
+We've added a new method on the mock `wasPayCalledWith`:
+
+```golang
+// Helper method for asserting Pay() was called with the correct parameter values
+func (m MockPayments) wasPayCalledWith(expectedAccountId string, expectedAmount string) bool {
+	return m.wasCalled && m.accountId == expectedAccountId && m.amount == expectedAmount
+}
+```
+
+This method allows us to review the interaction recorded by the mock.
+
+If we run the test - with an exmpty implementation of `MakePayment()`, it fails:
+
+````console
+=== RUN   TestPaymentMade
+    prog_test.go:47: expected Pay to be called correctly: got &{false  }
+--- FAIL: TestPaymentMade (0.00s)
+FAIL```
+
+ This allows us to add the production code to make the test pass:
+
+```golang
+func MakePayment(payments Payments) {
+	// In reality, there would be more complex code, of course
+	payments.Pay("Alan", "24.95 GBP")
+}
+````
+
+The test passes. Our code did call the `Pay()` method and sent the right parameters.
 
 ## Other kinds of Test Doubles
 
