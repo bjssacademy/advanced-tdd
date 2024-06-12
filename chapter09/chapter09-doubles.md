@@ -310,13 +310,16 @@ func (m MockPayments) wasPayCalledWith(expectedAccountId string, expectedAmount 
 
 This method allows us to review the interaction recorded by the mock.
 
+> **Note**: This method is for test-only. It _should not appear_ in the `Payments` interface
+
 If we run the test - with an empty implementation of `MakePayment()`, it fails:
 
 ````console
 === RUN   TestPaymentMade
     prog_test.go:47: expected Pay to be called correctly: got &{false  }
 --- FAIL: TestPaymentMade (0.00s)
-FAIL```
+FAIL
+```
 
  This allows us to add the production code to make the test pass:
 
