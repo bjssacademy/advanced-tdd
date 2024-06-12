@@ -45,7 +45,9 @@ We can think of our code under test as a process with inputs and outputs. These 
 
 Our component under test essentially runs some process to act on this input. It is that action that we wish to test.
 
-Using [Dependency Inversion/Injection]([Dependency Inversion/Injection](https://github.com/bjssacademy/advanced-tdd/blob/main/chapter09/chapter09.md#dependency-inversion---decoupling-dependencies), we can design our component to be independent of the exact source of the input. This allows us to configure the component to use either the real source - say a database - or some other source specifically for testing.
+### Using Dependency Inversion to enable Stub usage
+
+Using [Dependency Inversion/Injection](https://github.com/bjssacademy/advanced-tdd/blob/main/chapter09/chapter09.md#dependency-inversion---decoupling-dependencies), we can design our component to be independent of the exact source of the input. This allows us to configure the component to use either the real source - say a database - or some other source specifically for testing.
 
 A **stub** simulates an input source. It conforms to the programming interface of the input source, and simulates it for the test. A stub database, for example, can simulate what a database would do if queried for some user information.
 
@@ -81,9 +83,7 @@ A good example of stubbing involves time-sensitive actions.
 
 In the production code below, we want a function that will return AM or PM depending on the time of day. This will be hard to test if the function uses the actual; system time. To fix that, we use Dependency Inversion, and create an abstraction of reading the time.
 
-But let's start in true TDD fashion by writing the first part of our test.
-
-I'm feeling like testing that we get "AM" before noon, starting with the assert:
+Let's start by writing the first part of our test, starting with the assert:
 
 ```golang
 func TestAMBeforeNoon(t *testing.T) {
