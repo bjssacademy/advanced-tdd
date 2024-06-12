@@ -35,7 +35,7 @@ There are several kinds of test double that we can use. Each one has a different
 
 The two most useful are known as the _stub_ and the _mock_.
 
-### Stubs - Testing sources
+## Stubs - Testing sources
 
 _Stubs supply pre-canned data_
 
@@ -45,7 +45,7 @@ By using [Dependency Inversion/Injection](https://github.com/bjssacademy/advance
 
 The major advantage here is that our production code under test works the same way for both cases. There is no conditional behaviour inside it. No "if test mode is active" type stuff. Once the test passes against the stub, it will pass against the real object.
 
-#### Pre-canned data pins down assertions
+### Pre-canned data pins down assertions
 
 A stub always returns well-known, pre-canned data.
 
@@ -57,7 +57,7 @@ Because the input to our code is always the same, we can determine the expected 
 
 This allows us to write the Assert section of our test with confidence.
 
-### Example: Stubbing the System Clock
+## Example: Stubbing the System Clock
 
 A good example of stubbing involves time-sensitive actions.
 
@@ -160,7 +160,7 @@ Stubs enable us to simulate difficult-to-trigger conditions. The occurrence of a
 
 You can run this code in [this playground](https://goplay.tools/snippet/LBV0cz0d4Ne)
 
-#### Other things we can stub
+### Other sources we can stub
 
 It's not just time sources we can stub, of course. Any source of data - or events - can be stubbed:
 
@@ -172,7 +172,7 @@ It's not just time sources we can stub, of course. Any source of data - or event
 
 What else can you think of? What other sources can be stubbed?
 
-### Mocks - Testing sinks
+## Mocks - Testing sinks
 
 _Mocks record interactions_
 
@@ -209,7 +209,7 @@ The mock payment processor object simply _records_ the fact that pay() was calle
 
 Let's illustrate that with code
 
-### Example: Mocking a payment service
+## Example: Mocking a payment service
 
 TODO TODO TODO
 TODO TODO TODO
@@ -225,7 +225,7 @@ TODO TODO TODO
 TODO TODO TODO
 TODO TODO TODO
 
-## Other kinds of doubles
+## Other kinds of Test Doubles
 
 Other kinds of test double exist
 
