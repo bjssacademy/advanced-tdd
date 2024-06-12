@@ -2,7 +2,7 @@
 
 Using Dependency Inversion allows us to _replace_ the real dependencies with _fake_ dependencies for testing.
 
-![Using test doubles instead of real dependencies](images/test-doubles-used.png)
+![Using test doubles instead of real dependencies](images/using-test-doubles.png)
 
 This makes no difference to our code, nor our test.
 
