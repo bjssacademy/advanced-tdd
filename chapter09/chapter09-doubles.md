@@ -39,6 +39,8 @@ The two most useful are known as the _stub_ and the _mock_.
 
 _Stubs supply pre-canned data_
 
+![Stub arrangement](images/stubbing-clock.png)
+
 We can think of our code under test as a process with inputs and outputs. These can be data that enters or leaves the process. They can be events eithe rinitiating the process or being activated by the process. SOmetimes, they are both: an example would be an HTTP POST request. It is both an event plus a payload of data.
 
 A stub object simulates a source of something. The stub object exactly conforms to the programming interface of some 'difficult dependency' and simulates it for the test. A stub database, for example, simulates the data we can fetch from a real database.
@@ -50,8 +52,6 @@ The major advantage here is that our production code under test works the same w
 ### Pre-canned data pins down assertions
 
 A stub always returns well-known, pre-canned data.
-
-![Stub arrangement](images/stubbing-clock.png)
 
 The advantage is that our test can rely on this data. It is guaranteed to always be the same.
 
@@ -178,6 +178,8 @@ What else can you think of? What other sources can be stubbed?
 
 _Mocks record interactions_
 
+![Mocking a payment processor](images/mocking-payments.png)
+
 Stubs pretend to be a _source_ of something. They are good at simulating an _input_ to a process.
 
 But how do we simulate an _output_ device?
@@ -192,8 +194,6 @@ Examples of output devices include:
 Whereas a stub provides input to a process, what we need here is some way of capturing the output from a process. Was the payment provider called with the correct details? Was the robot arm commanded to move six degrees left?
 
 To capture interactions and commands, we use a _Mock_ object.
-
-![Mocking a payment processor](images/mocking-payments.png)
 
 In the preceding diagram, our test executes some production code that will trigger a payment. In production, this might be to a bank, or a service like Stripe. Our test does not want to run a real payment. It also wants to assert that the payment provider _would have been_ called in production.
 
