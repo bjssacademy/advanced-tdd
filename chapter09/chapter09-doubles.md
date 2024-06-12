@@ -37,27 +37,41 @@ The two most useful are known as the _stub_ and the _mock_.
 
 ## Stubs - Testing sources of data and events
 
-_Stubs supply pre-canned data_
+_Stubs simulate an input_
 
 ![Stub arrangement](images/stubbing-clock.png)
 
-We can think of our code under test as a process with inputs and outputs. These can be data that enters or leaves the process. They can be events eithe rinitiating the process or being activated by the process. SOmetimes, they are both: an example would be an HTTP POST request. It is both an event plus a payload of data.
+We can think of our code under test as a process with inputs and outputs. These can be data that enters or leaves the process. Data can be an input to the process, such as user information pulled from a database. Or the input can be an event, such as be an HTTP POST request, with a payload of data.
 
-A stub object simulates a source of something. The stub object exactly conforms to the programming interface of some 'difficult dependency' and simulates it for the test. A stub database, for example, simulates the data we can fetch from a real database.
+Our component under test essentially runs some process to act on this input. It is that action that we wish to test.
 
-By using [Dependency Inversion/Injection](https://github.com/bjssacademy/advanced-tdd/blob/main/chapter09/chapter09.md#dependency-inversion---decoupling-dependencies), then we are free to swap the real object with the stub for use within our code. The tests wire up the stub. Production code wires up the real object.
+Using [Dependency Inversion/Injection]([Dependency Inversion/Injection](https://github.com/bjssacademy/advanced-tdd/blob/main/chapter09/chapter09.md#dependency-inversion---decoupling-dependencies), we can design our component to be independent of the exact source of the input. This allows us to configure the component to use either the real source - say a database - or some other source specifically for testing.
 
-The major advantage here is that our production code under test works the same way for both cases. There is no conditional behaviour inside it. No "if test mode is active" type stuff. Once the test passes against the stub, it will pass against the real object.
+A **stub** simulates an input source. It conforms to the programming interface of the input source, and simulates it for the test. A stub database, for example, can simulate what a database would do if queried for some user information.
+
+Our test code will create a stub and inject the stub in to the component under test. The Arrange section can configure the stub, if need be. The Assert section can be written in the light of knowing what the stub will return.
+
+Our production code uses the same component code unchaged. But we inject a real version of the dependency we stubbed out.
+
+This gives us a major advantage: the code we tested _does not change_ when we use it in production. The tests remain valid. Only the input source is changed - and we test that code separately.
 
 ### Pre-canned data pins down assertions
 
-A stub always returns well-known, pre-canned data.
+Stubs always return the same data values, or trigger the same events, every time they are called. Known as _pre-canned_ data, this helps us figure out what result to expect from our process under test.
 
-The advantage is that our test can rely on this data. It is guaranteed to always be the same.
+This feature of stubs allows us to work out the expected results in our Assert step. Significantly, it makes that test repeatable. The stub will always do the same thing on every test run, in every environment.
 
-Because the input to our code is always the same, we can determine the expected outcome.
+### Stubbing other input sources
 
-This allows us to write the Assert section of our test with confidence.
+Anything providing an input or a trigger to a process is a candidate for stubbing in tests.
+
+Examples include:
+
+- **Databases**: Return stub data for queries ([example](https://goplay.tools/snippet/7ljrYRCZ5EW))
+- **Keyboard input**: Text from a keyboard or GUI can be stubbed
+- **Web Requests**: A request from a browser can be stubbed locally, avoiding HTTP calls
+- **Reference Data**: Data like tax tables can be stubbed, with values to explore our logic
+- **Events**: Events like a setTimeout() callback or onClick() can be stubbed. Call the event handler directly with stub data
 
 ## Example: Stubbing the System Clock
 
@@ -161,18 +175,6 @@ func TestPMAfterNoon(t *testing.T) {
 ```
 
 Stubs enable us to simulate difficult-to-trigger conditions. The occurrence of a specific time is a good example of that.
-
-### Other sources we can stub
-
-It's not just time sources we can stub, of course. Any source of data - or events - can be stubbed:
-
-- **Databases**: Return stub data for queries ([example](https://goplay.tools/snippet/7ljrYRCZ5EW))
-- **Keyboard input**: Text from a keyboard or GUI can be stubbed
-- **Web Requests**: A request from a browser can be stubbed locally, avoiding HTTP calls
-- **Reference Data**: Data like tax tables can be stubbed, with values to explore our logic
-- **Events**: Events like a setTimeout() callback or onClick() can be stubbed. Call the event handler directly with stub data
-
-What else can you think of? What other sources can be stubbed?
 
 ## Mocks - Testing sinks
 
