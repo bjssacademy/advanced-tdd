@@ -322,7 +322,7 @@ Both tests now pass:
 PASS
 ```
 
-## Mocks - Testing sinks
+## Mocks - Testing outputs and actions
 
 _Mocks record output interactions with other components_
 
