@@ -328,17 +328,9 @@ _Mocks record output interactions with other components_
 
 ![Mocking a payment processor](images/mocking-payments.png)
 
-Stubs simulate inputs to our process. A Mock simulates an output target of our process.
+_Mocks_ are useful when we want to test the _output_ of our component, when it calls a method, or raises an event. It's easy enough to capture a return value of data - as we have seen before. But a regular assertion isn't enough when we wish to check that our component called a specific method somewhere else.
 
-Our component under test will create some observable outcome. If it is a pure function, then the output will be some piece of returned data. Perhaps a created object. We can assert against those easily.
-
-A more challenging case is where our component has a _behaviour_ as its output.
-
-Perhaps it calls a method on another object. Maybe it calls a function that was passed-in. Maybe it places an event on an event bus.
-
-In each case, we cannot simply assert against an output data valuse, as the code simply does not work like that.
-
-We must _capture_ the behaviour.
+In general, when the output of our component is an _action_ rather than a _data flow_, we need to use a Mock.
 
 Mocks capture interactions by recording them. A mock for a payment service will record the different calls made to that service, and what the parameters to those calls were. A mock for an event bus will record which events were sent to it.
 
