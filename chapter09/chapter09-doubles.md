@@ -1,14 +1,14 @@
 # Working with Test Doubles
 
-Using Dependency Inversion allows us to _replace_ the real dependencies with _fake_ dependencies for testing.
+Using Dependency Inversion allows us to _replace_ the real dependencies with _fake_ dependencies for testing. These fakes are called _Test Doubles_.
 
 ![Using test doubles instead of real dependencies](images/using-test-doubles.png)
 
-This makes no difference to our code, nor our test.
+When we execute our application logic, we are only concerned with what _that piece_ of logic does. It will contain some process that acts on inputs, and produces observable outputs. This logic is independent of the sources of input, or the targets for output.
 
-When we execute our application logic, we are only concerned with _that piece_ of logic does. We write code that will take data and transform it, or make decisions and act on them. This logic is independent of any source of data or target for actions.
+A process to produce a report on some user information works the same way no matter where the user data comes from. Perahps from a database, or a file. Maybe it was manually typed in. It doesn't matter. The report generation logic does its thing and produces an output.
 
-That's the secret of _Test Doubles_.
+Our tests can take advantage of this design-level thinking.
 
 ## What are Test Doubles?
 
