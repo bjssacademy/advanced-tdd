@@ -332,6 +332,15 @@ func MakePayment(payments Payments) {
 
 The test passes. Our code did call the `Pay()` method and sent the right parameters.
 
+The test will also pick up programming errors, such as sending the wrong values:
+
+```console
+=== RUN   TestPaymentMade
+    prog_test.go:47: expected Pay to be called correctly: got &{true wrong-user 0.00 GBP}
+--- FAIL: TestPaymentMade (0.00s)
+FAIL
+```
+
 ## Other kinds of Test Doubles
 
 Other kinds of test double exist
