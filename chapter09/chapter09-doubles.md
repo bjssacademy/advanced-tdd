@@ -61,6 +61,8 @@ This allows us to write the Assert section of our test with confidence.
 
 ## Example: Stubbing the System Clock
 
+Run this code [here](https://goplay.tools/snippet/LBV0cz0d4Ne)
+
 A good example of stubbing involves time-sensitive actions.
 
 In the production code below, we want a function that will return AM or PM depending on the time of day. This will be hard to test if the function uses the actual; system time. To fix that, we use Dependency Inversion, and create an abstraction of reading the time:
@@ -160,8 +162,6 @@ func TestPMAfterNoon(t *testing.T) {
 
 Stubs enable us to simulate difficult-to-trigger conditions. The occurrence of a specific time is a good example of that.
 
-You can run this code in [this playground](https://goplay.tools/snippet/LBV0cz0d4Ne)
-
 ### Other sources we can stub
 
 It's not just time sources we can stub, of course. Any source of data - or events - can be stubbed:
@@ -212,6 +212,8 @@ The mock payment processor object simply _records_ the fact that pay() was calle
 Let's illustrate that with code
 
 ## Example: Mocking a payment service
+
+Run this code [here](https://goplay.tools/snippet/cuQEJ4VHCDu)
 
 TODO TODO TODO
 TODO TODO TODO
