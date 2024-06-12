@@ -314,21 +314,21 @@ This method allows us to review the interaction recorded by the mock.
 
 If we run the test - with an empty implementation of `MakePayment()`, it fails:
 
-````console
+```console
 === RUN   TestPaymentMade
     prog_test.go:47: expected Pay to be called correctly: got &{false  }
 --- FAIL: TestPaymentMade (0.00s)
 FAIL
 ```
 
- This allows us to add the production code to make the test pass:
+This allows us to add the production code to make the test pass:
 
 ```golang
 func MakePayment(payments Payments) {
 	// In reality, there would be more complex code, of course
 	payments.Pay("Alan", "24.95 GBP")
 }
-````
+```
 
 The test passes. Our code did call the `Pay()` method and sent the right parameters.
 
