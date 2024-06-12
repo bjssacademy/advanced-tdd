@@ -81,7 +81,7 @@ Run this code [here](https://goplay.tools/snippet/ehNnrYO99p1)
 
 A good example of stubbing involves time-sensitive actions.
 
-In the production code below, we want a function that will return AM or PM depending on the time of day. This will be hard to test if the function uses the actual; system time. To fix that, we use Dependency Inversion, and create an abstraction of reading the time.
+In the production code below, we want a function that will return AM or PM depending on the time of day. This will be hard to test if the function uses the actual system time. To fix that, we use Dependency Inversion, and create an abstraction of reading the time.
 
 Let's start by writing the first part of our test, starting with the assert:
 
@@ -95,7 +95,9 @@ func TestAMBeforeNoon(t *testing.T) {
 }
 ```
 
-What is got? Well, design choice one is to have a function called `amOrPm()` that returns the string "AM" or "PM". To get moving, that's all it will do right now:
+What is variable `got`? Our first design choice is to have a function called `amOrPm()` that returns the string "AM" or "PM".
+
+To get moving, that's all it will do right now:
 
 ```golang
 func TestAMBeforeNoon(t *testing.T) {
@@ -109,7 +111,7 @@ func TestAMBeforeNoon(t *testing.T) {
 }
 ```
 
-and add the function:
+Add the function definition itself:
 
 ```golang
 func amOrPm() string {
@@ -117,7 +119,7 @@ func amOrPm() string {
 }
 ```
 
-Run the test and watch it fais. Good. Add basic code to make the test pass:
+Run the test and watch it fail. Add basic code to make the test pass:
 
 ```golang
 func amOrPm() string {
@@ -125,7 +127,7 @@ func amOrPm() string {
 }
 ```
 
-Run the test and it passed. Happy days.
+Run the test and it passes. Happy days.
 
 The next test will drive out some more design decisions. The function needs to be able to return "PM" when the time is after 12 noon. Let's try a test for that:
 
@@ -141,15 +143,15 @@ func TestPMAfterNoon(t *testing.T) {
 }
 ```
 
-Now, depending on when you run the tests, one of them is going to fail!
+Now, depending on when you run the tests, one of them is going to fail! This is, of course, useless.
 
-We've fallend for the _difficult dependency_ trap, of coupling directly to the system clock.
+We've fallen for the _difficult dependency_ trap. We coupled directly to the system clock.
 
-Oh dear.
+D'Oh!
 
 We need to decouple that and introduce an abstraction for the clock.
 
-I'm choosing to bite the bullet, and pass in some interface into the `amOrPm()` function as a parameter. This will be the abstraction for our source of system time.
+I'm choosing to bite the bullet, and pass in an interface into the `amOrPm()` function as a parameter. This will be the abstraction for our source of system time.
 
 As this changes the programming interface, we'll need to update the tests. I prefer to comment out one of the two tests and work on one test first:
 
@@ -181,7 +183,7 @@ func amOrPm(clock Clock) string {
 }
 ```
 
-and we can update our test to include a stub clock to pass in:
+and update our test to include a stub clock to pass in:
 
 ```golang
 func TestAMBeforeNoon(t *testing.T) {
@@ -199,13 +201,17 @@ func TestAMBeforeNoon(t *testing.T) {
 }
 ```
 
-and define a `StubClock`:
+We then need to define a `StubClock`:
 
 ```golang
 type StubClock struct {
     // empty
 }
+```
 
+And make the stub clock conform to the `Clock` interface:
+
+```golang
 func (s StubClock) Now() time.Time {
     return time.Date(2024, 06, 10, 1, 00, 00, 0, time.UTC)
 }
@@ -213,9 +219,13 @@ func (s StubClock) Now() time.Time {
 
 This stub returns the pre-canned date/time of 10 June 2024 at 1:00 AM in the morning, UTC.
 
-We can run our test again, and it will pass. The test is not enough, alone, to triangulate the implementation of `amOrPm()`.
+We can run our test again, and it will pass.
 
-Let's reintroduce the PM test and update it to use the new stub:
+This single test is not enough to triangulate the implementation of `amOrPm()`.
+
+Let's reintroduce the PM test.
+
+We update it to use the new stub:
 
 ```golang
 func TestPMBeforeNoon(t *testing.T) {
@@ -233,12 +243,10 @@ func TestPMBeforeNoon(t *testing.T) {
 }
 ```
 
-We run the test and it fails.
+We run the test and it fails. We have two issues to resolve:
 
-We have two issues to resolve:
-
-- The Stub only ever returns that "AM" time. It cannot be used as-is to test PM behaviour
-- `amOrPm()` has no logic to return "PM"
+- The Stub only ever returns a time that is in the morning. It cannot be used as-is to test PM behaviour
+- `amOrPm()` has no logic to return "PM" yet
 
 Let's make the stub more capable:
 
@@ -251,6 +259,8 @@ func (s StubClock) Now() time.Time {
     return time.Date(2024, 06, 10, s.hourOfDay, 00, 00, 0, time.UTC)
 }
 ```
+
+This improved stub can be configured by the test Arrange step to return a specific hour of the day.
 
 By default, the stub will return Midnight - enough to make our "AM" test pass. But the PM test fails.
 
@@ -272,7 +282,7 @@ func TestPMBeforeNoon(t *testing.T) {
 }
 ```
 
-The test fails, as we still have no logic. Add that:
+The test fails, as we still have no logic in `amOrPm()`. Add that:
 
 ```golang
 func amOrPm(clock Clock) string {
