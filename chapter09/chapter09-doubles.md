@@ -351,7 +351,7 @@ Anything which is acted upon by our component is a candidate for a mock during t
 
 ## Example: Mocking a payment service
 
-Run this code [here](https://goplay.tools/snippet/DjxeQXIHeVQ)
+Run this code [here](https://goplay.tools/snippet/oyvpvqjCwxT)
 
 In this example, we are test-driving a simple function `MakePayment`. This function will make a single payment to an external payment service. We want to test that it makes the right call.
 
