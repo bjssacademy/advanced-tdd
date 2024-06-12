@@ -148,7 +148,7 @@ func TestPMAfterNoon(t *testing.T) {
 We _could_ (**Ed**: no, really, don't) implement by checking the system time, like this:
 
 ```golang
-func amOrPm(clock Clock) string {
+func amOrPm() string {
 	timeNow := time.Now()
 
 	if timeNow.Hour() < 12 {
