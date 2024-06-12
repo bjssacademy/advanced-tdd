@@ -213,11 +213,24 @@ Anything which is acted upon by our component is a candidate for a mock during t
 
 ## Example: Mocking a payment service
 
-Run this code [here](https://goplay.tools/snippet/AysBWYhdWS_e)
+Run this code [here](https://goplay.tools/snippet/DjxeQXIHeVQ)
 
 In this example, we are test-driving a simple function `MakePayment`. This function will make a single payment to an external payment service. We want to test that it makes the right call.
 
-We start with an abstraction of the payment service, tailored to our need:
+We can start by writing the Act step of the test and making our first design decision:
+
+```golang
+func TestPaymentMade(t *testing.T) {
+	// ACT - call our function, pass it an implementation of the payment service
+	MakePayment(payments)
+}
+```
+
+We've gone for a simple function `MakePayment()` which will mae a single payment to a third-party service. We pass in how to reach that service as the first parameter. This is applying Dependency Injection.
+
+We don't have a `payments` object just yet. We need to create one.
+
+The first step is to define an abstraction of the payments service that's good enough for our application:
 
 ```golang
 type Payments interface {
@@ -225,11 +238,31 @@ type Payments interface {
 }
 ```
 
-Our production code would write an implementation of the `Pay()` method. It would talk to a real bank, or real payment service like Stripe.
+Our production code would write an implementation of the `Pay()` method. It would talk to a real bank, or real payment service like Stripe. We're not going to write that now. We only want to TDD the `MakePayment()` logic at this stage.
 
 For our test, we want to avoid calls to the real service. We instead want to capture the fact that a call happened.
 
-We can create a Mock to do this:
+We can create a Mock payments service to do this. Starting with the test Arrange step:
+
+```golang
+func TestPaymentMade(t *testing.T) {
+	// ARRANGE - create mock
+	mockPay := &MockPayments{}
+
+	// ACT - call our function, pass it the mock
+	MakePayment(mockPay)
+}
+```
+
+That's enough to code up the `MakePayment()`` with a do-nothing implementation:
+
+```golang
+func MakePayment(payments Payments) {
+    // Not implemented
+}
+```
+
+We can then add details of a Mock payments service:
 
 ```golang
 type MockPayments struct {
@@ -245,37 +278,7 @@ func (m *MockPayments) Pay(accountId string, amount string) {
 }
 ```
 
-This mock records if the `Pay()` method was ever called. If it was, it records the values of the parameters it was called with.
-
-We can start to write our test:
-
-```golang
-
-func TestPaymentMade(t *testing.T) {
-	// ARRANGE - create stub
-	mockPay := &MockPayments{}
-}
-```
-
-We can then TDD out our function in the act step next:
-
-```golang
-func TestPaymentMade(t *testing.T) {
-	// ARRANGE - create stub
-	mockPay := &MockPayments{}
-
-	// ACT - call our function, pass it the stub
-	MakePayment(mockPay)
-}
-```
-
-That's enough to code up the method signature with a do-nothing implementation:
-
-```golang
-func MakePayment(payments Payments) {
-    // Not implemented
-}
-```
+This mock conforms to our `Payments` interface and can be substituted for it. It records if the `Pay()` method was ever called. If it was, it records the values of the parameters it was called with.
 
 We need to specify what we want the observable behaviour of `MakePayment()` to be. We do this by writing the assert step:
 
@@ -307,7 +310,7 @@ func (m MockPayments) wasPayCalledWith(expectedAccountId string, expectedAmount 
 
 This method allows us to review the interaction recorded by the mock.
 
-If we run the test - with an exmpty implementation of `MakePayment()`, it fails:
+If we run the test - with an empty implementation of `MakePayment()`, it fails:
 
 ````console
 === RUN   TestPaymentMade
