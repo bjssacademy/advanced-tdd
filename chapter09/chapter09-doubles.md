@@ -145,15 +145,31 @@ func TestPMAfterNoon(t *testing.T) {
 }
 ```
 
+We _could_ (**Ed**: no, really, don't) implement by checking the system time, like this:
+
+```golang
+func amOrPm(clock Clock) string {
+	timeNow := time.Now()
+
+	if timeNow.Hour() < 12 {
+		return "AM"
+	}
+
+	return "PM"
+}
+```
+
 Now, depending on when you run the tests, one of them is going to fail! This is, of course, useless.
 
 We've fallen for the _difficult dependency_ trap. We coupled directly to the system clock.
 
 D'Oh!
 
-We need to decouple that and introduce an abstraction for the clock.
+We need to _decouple_ that dependency. We want an abstraction for the input source of time.
 
-I'm choosing to bite the bullet, and pass in an interface into the `amOrPm()` function as a parameter. This will be the abstraction for our source of system time.
+Design decision: Create a suitable interface. Pass it in as a parameter to `amOrPm()`.
+
+#### Updating existing tests to reflect this re-design
 
 As this changes the programming interface, we'll need to update the tests. I prefer to comment out one of the two tests and work on one test first:
 
@@ -177,7 +193,7 @@ type Clock interface {
 }
 ```
 
-which allows us to change the function signature:
+which allows us to change the function signature of `amOrPm()`:
 
 ```golang
 func amOrPm(clock Clock) string {
