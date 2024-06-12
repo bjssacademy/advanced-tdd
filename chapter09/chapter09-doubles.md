@@ -49,15 +49,13 @@ The major advantage here is that our production code under test works the same w
 
 A stub always returns well-known, pre-canned data.
 
-![Stub arrangement](images/stubbing-datasource.png)
+![Stub arrangement](images/stubbing-datasourceclock.png)
 
 The advantage is that our test can rely on this data. It is guaranteed to always be the same.
 
 Because the input to our code is always the same, we can determine the expected outcome.
 
 This allows us to write the Assert section of our test with confidence.
-
-[This playground](https://goplay.tools/snippet/7ljrYRCZ5EW) shows an example of a stub in use. In this code, the stubbed-out data is a favourite food of "curry". This allows us to write the assertion.
 
 ### Example: Stubbing the System Clock
 
