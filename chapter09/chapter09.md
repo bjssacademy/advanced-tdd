@@ -374,6 +374,8 @@ We could equally have an in-memory version of the `UserProfilesRepository` that 
 
 > _Domain objects must not depend on adapters_.
 
+If any domain layer code suddenly sprouts an `HTTPWebRequest` or SQL string, you know you've got this wrong.
+
 The power of this approach is that the domain model has no ties to specific technologies. That's the adapter layer job, to hide all that.
 
 The domain model can then be FIRST unit tested at will. We can test small pieces of domain - a function, a method. And we can also teach larger units of the domain, such as a full user case.
