@@ -300,7 +300,7 @@ If we invert the dependencies on _every_ external system, we end up with an arch
 
 Hexgonal Architecture features two distinct layers:
 
-- **Domain** Our model of the problem our application solves
+- **Domain** Our model of the problem our application solves. Called Application(core) in the graphic
 - **Adapters** Connect our domain model components to the outside world
 
 ### Domain Layer
