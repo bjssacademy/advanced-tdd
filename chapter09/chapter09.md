@@ -301,7 +301,7 @@ If we invert the dependencies on _every_ external system, we end up with an arch
 Hexgonal Architecture features two distinct layers:
 
 - **Domain** Our model of the problem our application solves
-- **Adapters** [Adapters](https://refactoring.guru/design-patterns/adapter) that connect our domain model to the outside world
+- **Adapters** Connect our domain model components to the outside world
 
 ### Domain Layer
 
@@ -335,7 +335,7 @@ So ... where does all that detail go?
 
 Glad you asked. The details of how we connect to the outside world live in the Adapter layer.
 
-The code blocks used to implement connections are called _adapters_. They adapt from the abstract workld of the domain into the grimy real world.
+The code blocks used to implement connections are called _adapters_. They are based on the [Adapter](https://refactoring.guru/design-patterns/adapter) design pattern. They adapt from the abstract workld of the domain into the grimy real world.
 
 Our `UserProfileRepository` might be implemented with a postgres database, for example:
 
@@ -344,7 +344,7 @@ type UserProfileRepositoryPostgres struct {
 	conn DatabaseConnection
 }
 
-func (r UserProfileRepositoryPostgres) FindByUserId( userId int)(UserProfile, error) {
+func (r UserProfileRepositoryPostgres) FindById( userId int)(UserProfile, error) {
 	query := "SELECT * FROM Profiles WHERE id = ? LIMIT 1"
 	stmt := r.conn.CreatePreparedStatement(query)
 	stmt.Bind(1, userId)
@@ -356,6 +356,8 @@ func (r UserProfileRepositoryPostgres) FindByUserId( userId int)(UserProfile, er
 		description: columns["description"]
 		imageUrl: columns["imageUrl"]
 	}
+
+	return profile
 }
 ```
 
