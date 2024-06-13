@@ -298,26 +298,95 @@ If we invert the dependencies on _every_ external system, we end up with an arch
 
 ![Hexagonal Architecture overview](images/hexarch.png)
 
-This greatly simplifies testing our application logic. It enables us to use _Test Doubles_ for every external system. The next chapter will describe Test Doubles in detail.
-
-### Domain and Adapter Layer
-
 Hexgonal Architecture features two distinct layers:
 
 - **Domain** Our model of the problem our application solves
-- **Adapters** Code that links our model to the outside world
+- **Adapters** [Adapters](https://refactoring.guru/design-patterns/adapter) that connect our domain model to the outside world
 
-It has one key rule: _Domain objects must not depend on adapters_. We use Dependency Inversion where required to make that happen.
+### Domain Layer
 
-It's ok for code in the adapters to depend on the domain objects. But domain objects must have no knowledge of adapter objects at all.
+The domain layer is where we model the problem that our application solves. It's the part where all the logic goes.
 
-This gives us a totally clean separation between the problem logic, and the technologies used to connect outside the domain.
+You'll notice some 'obvious' things missing from a domain layer. If we are using a SQL database to store User Profiles, you'll see a representation of a User Profile. But you _won't_ see any SQL statements, or database connection strings.
 
-_This_ property means that we can easily TDD our whole domain, using FIRST tests. As the domain has no 'difficult dependencies' by design, every test will meet the FIRST standard.
+These details of how we connect to the wider system are hidden behind abstractions. These abstractions are called _ports_ in Hexagonal terminology.
 
-That's the big win for hexagonal architecture. No messing about with HTTP tests. Or SQL database tests. Or filesystem tests. Just pure application logic. A further point is that each technology can be swapped out for an alternative. Switching from a Postgres SQL database to a Monog NoSQL database involves changing only the adapter to the database. There will be no change to the domain code.
+A port for our user profile access might look like this:
 
-#### Further reading on TDD and Hexagonal Architecture
+```golang
+type UserProfileRepository interface {
+	FindById(userId int)(UserProfile, error)
+
+	Save(profile UserProfile) error
+
+	Delete(userId int)
+}
+```
+
+This is an abstraction of the CRUD operations that our application needs. They are expressed in purely _domain terms_.
+
+There is nothing here that suggests how this repository will be implemented.
+
+This is a classic use of Dependency Inversion. The domain model remains unaware of any details of the repository.
+
+So ... where does all that detail go?
+
+### Adapter Layer
+
+Glad you asked. The details of how we connect to the outside world live in the Adapter layer.
+
+The code blocks used to implement connections are called _adapters_. They adapt from the abstract workld of the domain into the grimy real world.
+
+Our `UserProfileRepository` might be implemented with a postgres database, for example:
+
+```golang
+type UserProfileRepositoryPostgres struct {
+	conn DatabaseConnection
+}
+
+func (r UserProfileRepositoryPostgres) FindByUserId( userId int)(UserProfile, error) {
+	query := "SELECT * FROM Profiles WHERE id = ? LIMIT 1"
+	stmt := r.conn.CreatePreparedStatement(query)
+	stmt.Bind(1, userId)
+	columns[] := stmt.executeQuery()
+
+	profile := UserProfile {
+		id: userId
+		name: columns["name"]
+		description: columns["description"]
+		imageUrl: columns["imageUrl"]
+	}
+}
+```
+
+You can see here that the adapter contains details of SQL, the database library, the schema we have designed for storing profiles and so on.
+
+It adapts in two ways:
+
+- Adapts the abstract method "find me a profile, given this userId" into database specifics
+- Adapts the returned SQL columns into a domain layer pure structure `UserProfile`
+
+We could equally have an in-memory version of the `UserProfilesRepository` that has nothing at all to do with database details. It would continue to return the domain layer object `UserProfile`.
+
+### Hexagonal Golden Rule
+
+> _Domain objects must not depend on adapters_.
+
+The power of this approach is that the domain model has no ties to specific technologies. That's the adapter layer job, to hide all that.
+
+The domain model can then be FIRST unit tested at will. We can test small pieces of domain - a function, a method. And we can also teach larger units of the domain, such as a full user case.
+
+This reduces the amount of integration testing needed. We still need some; testing the adapter layer components needs to get dirty with SQL and HTTP and whatever else is used. But we can make each adapter as _thin_ as possible. This drives application logic back into the domain where it belongs.
+
+### Benefits
+
+- Easy to TDD domain with FIRST tests
+- Clean separation of incidental technologies like comms, data stores, HTTP
+- Easy to apply Test Doubles (see later)
+- Easy to replace a technology. For example sqp Postgres SQL database for Mongo NoSQL solution.
+- Adapters have little logic, reducing testing
+
+### Further reading on TDD and Hexagonal Architecture
 
 Wikipedia has a good summary of [Hexagonal Architecture](<https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)>)
 
