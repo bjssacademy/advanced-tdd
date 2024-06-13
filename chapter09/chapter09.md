@@ -292,13 +292,32 @@ In the test example above, this means we will call the `fakeQueryDatabase` funct
 
 You can see this code run on [this playground](https://goplay.tools/snippet/OzAa74pfI67)
 
-### Hexagonal architecture
+## Hexagonal architecture
 
 If we invert the dependencies on _every_ external system, we end up with an architectural pattern known as _Hexagonal Architecture_
 
 ![Hexagonal Architecture overview](images/hexarch.png)
 
 This greatly simplifies testing our application logic. It enables us to use _Test Doubles_ for every external system. The next chapter will describe Test Doubles in detail.
+
+### Domain and Adapter Layer
+
+Hexgonal Architecture features two distinct layers:
+
+- **Domain** Our model of the problem our application solves
+- **Adapters** Code that links our model to the outside world
+
+It has one key rule: _Domain objects must not depend on adapters_. We use Dependency Inversion where required to make that happen.
+
+It's ok for code in the adapters to depend on the domain objects. But domain objects must have no knowledge of adapter objects at all.
+
+This gives us a totally clean separation between the problem logic, and the technologies used to connect outside the domain.
+
+_This_ property means that we can easily TDD our whole domain, using FIRST tests. As the domain has no 'difficult dependencies' by design, every test will meet the FIRST standard.
+
+That's the big win for hexagonal architecture. No messing about with HTTP tests. Or SQL database tests. Or filesystem tests. Just pure application logic. A further point is that each technology can be swapped out for an alternative. Switching from a Postgres SQL database to a Monog NoSQL database involves changing only the adapter to the database. There will be no change to the domain code.
+
+#### Further reading on TDD and Hexagonal Architecture
 
 Wikipedia has a good summary of [Hexagonal Architecture](<https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)>)
 
