@@ -137,6 +137,11 @@ Two excellent books cover these wider aspects of "how do we get stuff delivered 
 - [Modern Software Engineering](https://learning.oreilly.com/library/view/-/9780137314942/), Dave Farley
 - [Continuous Delivery](https://learning.oreilly.com/library/view/-/9780321670250/), Jez Humble and Dave farley
 
+Some short articles that are useful:
+
+- [TDD done wrong](https://www.industriallogic.com/blog/tdd-youre-doing-it-wrong/)
+- [3 Rules of TDD](http://butunclebob.com/ArticleS.UncleBob.TheThreeRulesOfTdd)
+
 ## Next
 
 Some [TDD Anti-Patterns >>](/chapter11/chapter11.md) to avoid
